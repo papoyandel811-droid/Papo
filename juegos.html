@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Juegos</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: radial-gradient(circle, #2a0000 0%, #050000 100%); color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; min-height: 100vh; padding: 120px 20px 40px 20px; overflow-x: hidden; perspective: 1000px; }
@@ -14,8 +15,12 @@
         .search-input { width: 100%; padding: 14px 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
         .search-input::placeholder { color: #888888; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
         .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
-        .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; justify-content: center; }
-        .card { background: rgba(15, 5, 5, 0.5); border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); padding: 30px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 420px; width: 100%; max-width: 340px; justify-content: space-between; transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; transform-style: preserve-3d; }
+        
+        /* CUADRÍCULA ESTABLE EN FILA */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; justify-items: center; }
+        
+        /* TARJETA 3D ORIGINAL DE TU WORD */
+        .card { background: rgba(15, 5, 5, 0.5); border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); padding: 30px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; height: 420px; width: 100%; max-width: 340px; justify-content: space-between; transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; transform-style: preserve-3d; }
         .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; transform: translateZ(20px); }
         .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; transform: translateZ(15px); }
         .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; transform: translateZ(25px); }
@@ -25,22 +30,31 @@
         .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); }
         .btn-tutorial:hover { transform: translateZ(25px) scale(1.04); box-shadow: 0 10px 20px rgba(0, 162, 255, 0.6); }
         .btn-download:hover { transform: translateZ(25px) scale(1.04); box-shadow: 0 10px 20px rgba(162, 0, 255, 0.6); }
+        .btn-action i { margin-right: 6px; }
+
         #notification-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast-notification { background: rgba(0, 0, 0, 0.8); border: 2px solid #ff0000; border-radius: 12px; padding: 16px 28px; color: #ffffff; font-weight: bold; font-size: 0.95rem; box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); display: flex; align-items: center; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         .toast-notification.show { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
+
+    <!-- MENÚ -->
     <div class="navbar">
         <a href="index.html" class="nav-link">Inicio</a>
         <a href="juegos.html" class="nav-link active">Juegos</a>
         <a href="aplicaciones.html" class="nav-link">Aplicaciones</a>
         <a href="pc.html" class="nav-link">Windows & Office</a>
     </div>
+
     <div id="notification-container"></div>
+
+    <!-- BUSCADOR -->
     <div class="search-container">
         <input type="text" class="search-input" placeholder="🔍 Buscar juego...">
     </div>
+
+    <!-- REJILLA CON 6 JUEGOS -->
     <div class="grid-container">
         <!-- 1. Minecraft Shaders -->
         <div class="card">
@@ -50,8 +64,8 @@
             </div>
             <img class="card-img" src="minecraft.png" alt="Minecraft">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="Minecraft Shaders">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="Minecraft Shaders"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
 
@@ -63,8 +77,8 @@
             </div>
             <img class="card-img" src="freefire.png" alt="Free Fire">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="Free Fire Max">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="Free Fire Max"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
 
@@ -76,8 +90,8 @@
             </div>
             <img class="card-img" src="gtav.png" alt="GTA V">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="GTA V Mobile">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="GTA V Mobile"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
 
@@ -89,8 +103,8 @@
             </div>
             <img class="card-img" src="roblox.png" alt="Roblox">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="Roblox Mod Menu">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="Roblox Mod Menu"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
 
@@ -102,8 +116,8 @@
             </div>
             <img class="card-img" src="warzone.png" alt="Warzone">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="COD Warzone">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="COD Warzone"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
 
@@ -115,39 +129,81 @@
             </div>
             <img class="card-img" src="crash.png" alt="Crash">
             <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="Crash Bandicoot">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="Crash Bandicoot"><i class="fas fa-download"></i> Descargar</a>
             </div>
         </div>
     </div>
 
+    <!-- BOTÓN VOLVER -->
     <div style="display: flex; justify-content: center; margin: 60px 0 20px 0; width: 100%;">
         <a href="index.html" style="display: inline-flex; align-items: center; padding: 15px 35px; background: #000000; border: 2px solid #ff0000; border-radius: 15px; color: #ffffff; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px #ff0000';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 0, 0, 0.6)';">
             Volver al inicio
         </a>
     </div>
 
-    <script type="text/javascript">
-        window.addEventListener('DOMContentLoaded', () => {
-            const input = document.querySelector('.search-input');
-            if (input) {
-                input.addEventListener('input', function(e) {
-                    const texto = e.target.value.toLowerCase().trim();
-                    document.querySelectorAll('.grid-container .card').forEach(card => {
-                        const titulo = card.querySelector('.card-title').textContent.toLowerCase();
-                        card.style.display = titulo.includes(texto) ? 'flex' : 'none';
-                    });
+<!-- SCRIPTS CORREGIDOS DE ROTACIÓN 3D Y BUSCADOR -->
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', () => {
+        
+        // BUSCADOR COMPATIBLE INFALIBLE
+        const input = document.querySelector('.search-input');
+        if (input) {
+            input.addEventListener('input', function(e) {
+                const texto = e.target.value.toLowerCase().trim();
+                document.querySelectorAll('.grid-container .card').forEach(card => {
+                    const titulo = card.querySelector('.card-title').textContent.toLowerCase();
+                    card.style.display = titulo.includes(texto) ? 'flex' : 'none';
                 });
-            }
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('mousemove', function(e) {
-                    const box = this.getBoundingClientRect();
-                    const x = e.clientX - box.left - (box.width / 2);
-                    const y = e.clientY - box.top - (box.height / 2);
-                    const rotarX = -(y / box.height) * 20;
-                    const rotarY = (x / box.width) * 20;
-                    this.style.transform = "rotateX(" + rotarX + "deg) rotateY(" + rotarY + "deg) scale(1.03)";
-                    this.style.boxShadow = "0 15px 35px rgba(255, 0, 0, 0.6)";
-                    this.style.borderColor = "#ff4d4d";
-                });
-                card.addEventListener('mouseleave', function() {
+            });
+        }
+
+        // ROTACIÓN INTERACTIVA 3D COMPLETA
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const box = this.getBoundingClientRect();
+                const x = e.clientX - box.left - (box.width / 2);
+                const y = e.clientY - box.top - (box.height / 2);
+                const rotarX = -(y / box.height) * 20;
+                const rotarY = (x / box.width) * 20;
+                this.style.transform = "rotateX(" + rotarX + "deg) rotateY(" + rotarY + "deg) scale(1.03)";
+                this.style.boxShadow = "0 15px 35px rgba(255, 0, 0, 0.6)";
+                this.style.borderColor = "#ff4d4d";
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+                this.style.boxShadow = "0 0 20px rgba(255, 0, 0, 0.4)";
+                this.style.borderColor = "#ff0000";
+            });
+        });
+
+        // NOTIFICACIONES DE DESCARGA (TOAST)
+        document.querySelectorAll('.btn-notify').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const appName = this.getAttribute('data-name');
+                const container = document.getElementById('notification-container');
+                if (container) {
+                    const toast = document.createElement('div');
+                    toast.className = 'toast-notification';
+                    toast.innerHTML = '🚀 Preparando descarga de ' + appName + '...';
+                    container.appendChild(toast);
+                    setTimeout(() => toast.classList.add('show'), 50);
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                }
+            });
+        });
+
+        // CORRECCIÓN IMÁGENES ROTAS
+        document.querySelectorAll(".card-img").forEach(img => {
+            img.addEventListener("error", function() {
+                this.style.display = "none";
+            });
+        });
+    });
+</script>
+</body>
+</html>
