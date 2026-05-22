@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Plataforma de Descargas Premium</title>
-    <!-- Iconos premium -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,25 +13,20 @@
             color: #ffffff;
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 20px 100px 20px;
+            padding: 20px;
+            display: block; /* Corregido: Evita que flexbox bloquee la pantalla */
         }
 
+        /* BARRA SUPERIOR */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             background: rgba(5, 0, 0, 0.95);
             border-bottom: 2px solid rgba(255, 0, 0, 0.3);
-            display: none;
+            display: flex;
             justify-content: center;
             gap: 25px;
             padding: 18px;
-            z-index: 1000;
+            margin-bottom: 30px;
             box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
         }
 
@@ -43,36 +37,35 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.3s, text-shadow 0.3s;
+            transition: color 0.3s;
             cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
             color: #ff0000;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .container {
             width: 100%;
             max-width: 1200px;
-            padding: 0 10px;
+            margin: 0 auto;
         }
 
         .main-section {
             display: none;
             width: 100%;
-            padding-top: 80px;
         }
 
+        /* PANTALLA DE INICIO CENTRADA */
         .home-menu {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 25px;
             width: 100%;
             max-width: 650px;
-            margin: 0 auto;
+            margin: 10vh auto 0 auto;
         }
 
         .home-logo {
@@ -94,14 +87,13 @@
             font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2), inset 0 0 15px rgba(255, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
 
         .big-btn:hover {
@@ -116,12 +108,8 @@
 
         .section-header h1 {
             font-size: 2.5rem;
-            font-weight: 900;
             color: #ff0000;
             text-shadow: 0 0 10px #ff0000;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
             text-transform: uppercase;
         }
 
@@ -141,36 +129,15 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            min-height: 350px;
             justify-content: space-between;
-            min-height: 380px;
         }
 
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
+        .card-subtitle { font-size: 0.85rem; color: #ff4d4d; margin-bottom: 20px; text-transform: uppercase; }
+        .card-img { width: 90px; height: 90px; margin-bottom: 20px; }
 
-        .card-subtitle {
-            font-size: 0.85rem;
-            color: #ff4d4d;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .card-img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-
-        .btn-group {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
 
         .btn-action {
             display: block;
@@ -201,33 +168,23 @@
             align-items: center;
             gap: 10px;
             font-weight: bold;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             z-index: 2000;
         }
 
-        .instagram-float:hover {
-            transform: scale(1.05);
-        }
-
         .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
             width: 100%;
-            background: rgba(5, 0, 0, 0.9);
-            padding: 15px;
+            padding: 20px;
             font-size: 0.9rem;
             color: #777777;
             text-align: center;
-            border-top: 1px solid rgba(255, 0, 0, 0.1);
-            z-index: 1900;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
-    <div id="topNavbar" class="navbar">
+    <!-- BARRA SUPERIOR (Siempre armada pero oculta el bloque según la sección) -->
+    <div id="topNavbar" class="navbar" style="display: none;">
         <span class="nav-link" onclick="irAlInicioBase()">Inicio</span>
         <span id="nav-juegos" class="nav-link" onclick="navegarInterno('juegos', 'nav-juegos')">Juegos</span>
         <span id="nav-apps" class="nav-link" onclick="navegarInterno('apps', 'nav-apps')">Aplicaciones</span>
@@ -237,7 +194,7 @@
     <div class="container">
 
         <!-- INICIO -->
-        <div id="inicio" style="display: block; width: 100%;">
+        <div id="inicio" class="main-section" style="display: block;">
             <div class="home-menu">
                 <div class="home-logo">PAPOXV</div>
                 <button class="big-btn" onclick="entrarASeccion('juegos', 'nav-juegos')"><i class="fas fa-gamepad"></i> Juegos</button>
@@ -248,17 +205,17 @@
 
         <!-- SECCIÓN: JUEGOS -->
         <div id="juegos" class="main-section">
-            <div class="section-header"><h1><i class="fas fa-gamepad"></i> Juegos del PapoVerso</h1></div>
+            <div class="section-header"><h1><i class="fas fa-gamepad"></i> Juegos</h1></div>
             <div class="grid-container">
                 <div class="card">
                     <div>
                         <div class="card-title">Minecraft Shaders</div>
-                        <div class="card-subtitle">(Ultra HD - Lite)</div>
+                        <div class="card-subtitle">(Ultra HD)</div>
                     </div>
                     <img class="card-img" src="https://flaticon.com" alt="Icono">
                     <div class="btn-group">
-                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
-                        <a href="#" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar Juego</a>
+                        <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
+                        <a href="#" class="btn-action btn-download">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -266,7 +223,7 @@
 
         <!-- SECCIÓN: APLICACIONES -->
         <div id="apps" class="main-section">
-            <div class="section-header"><h1><i class="fas fa-mobile-alt"></i> Aplicaciones Pro</h1></div>
+            <div class="section-header"><h1><i class="fas fa-mobile-alt"></i> Aplicaciones</h1></div>
             <div class="grid-container">
                 <div class="card">
                     <div>
@@ -275,8 +232,8 @@
                     </div>
                     <img class="card-img" src="https://flaticon.com" alt="Icono">
                     <div class="btn-group">
-                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
-                        <a href="https://tpi.li" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar App</a>
+                        <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
+                        <a href="https://tpi.li" class="btn-action btn-download">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -292,3 +249,29 @@
                         <div class="card-subtitle">(ISO Pre-activada)</div>
                     </div>
                     <img class="card-img" src="https://flaticon.com" alt="Icono">
+                    <div class="btn-group">
+                        <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
+                        <a href="#" class="btn-action btn-download">Descargar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="https://instagram.com" target="_blank" class="instagram-float">
+        <i class="fab fa-instagram"></i> <span>Sígueme</span>
+    </a>
+
+    <div class="footer">
+        <p>&copy; 2026 papoxv | Todos los derechos reservados.</p>
+    </div>
+
+    <script>
+        function entrarASeccion(idSeccion, idLinkMenu) {
+            document.getElementById('inicio').style.display = 'none';
+            document.getElementById('topNavbar').style.display = 'flex';
+            navegarInterno(idSeccion, idLinkMenu);
+        }
+        function navegarInterno(idSeccion, idLinkMenu) {
+            document.getElementById('juegos').style.display = 'none';
