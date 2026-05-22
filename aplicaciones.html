@@ -14,7 +14,7 @@
             min-height: 100vh; 
             padding: 120px 20px 40px 20px; 
             overflow-x: hidden;
-            perspective: 1000px;
+            perspective: 1000px; /* Activa el entorno 3D general */
         }
         
         .navbar { 
@@ -44,15 +44,17 @@
             text-shadow: 0 0 10px #ff0000; 
         }
 
+        /* Buscador translúcido */
         .search-container { max-width: 500px; margin: 20px auto 30px auto; display: flex; justify-content: center; width: 100%; }
-        .search-input { width: 100%; padding: 14px 20px; background: #000000; border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
+        .search-input { width: 100%; padding: 14px 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
         .search-input::placeholder { color: #888888; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
         .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
         
         .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; justify-content: center; }
         
+        /* TARJETAS TRANSLÚCIDAS CON ENTORNO INTERNO 3D */
         .card { 
-            background: #000000; 
+            background: rgba(15, 5, 5, 0.5); /* Deja pasar tu degradado rojo original */
             border: 2px solid #ff0000; 
             border-radius: 20px; 
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); 
@@ -65,21 +67,59 @@
             width: 100%; 
             max-width: 340px; 
             justify-content: space-between;
-            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
             cursor: pointer;
-            transform-style: preserve-3d;
+            transform-style: preserve-3d; /* Permite que los elementos de adentro floten hacia afuera */
         }
         
-        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
-        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
-        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; }
-        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; transform: translateZ(20px); }
+        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; transform: translateZ(15px); }
+        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; transform: translateZ(30px); }
         
-        .btn-action { display: block; width: 100%; padding: 12px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+        /* Contenedor de botones flotantes */
+        .btn-group { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            transform-style: preserve-3d;
+            transform: translateZ(25px); 
+        }
+        
+        /* BOTONES INTERACTIVOS 3D */
+        .btn-action { 
+            display: block; 
+            width: 100%; 
+            padding: 12px; 
+            color: #ffffff; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            border-radius: 15px; 
+            text-transform: uppercase; 
+            text-align: center; 
+            letter-spacing: 1px; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, filter 0.3s ease;
+            transform: translateZ(0px); /* Base inicial */
+        }
+        
+        /* Colores base planos */
         .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3); }
         .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); }
-        .btn-action:hover { filter: brightness(1.2); }
+        
+        /* EFECTO 3D POP-UP: Se levanta físicamente hacia el usuario */
+        .btn-tutorial:hover { 
+            transform: translateZ(20px) scale(1.03); 
+            box-shadow: 0 10px 20px rgba(0, 162, 255, 0.6);
+            filter: brightness(1.1);
+        }
+        .btn-download:hover { 
+            transform: translateZ(20px) scale(1.03); 
+            box-shadow: 0 10px 20px rgba(162, 0, 255, 0.6);
+            filter: brightness(1.1);
+        }
 
+        /* Contenedor de Alertas */
         #notification-container {
             position: fixed;
             bottom: 30px;
@@ -92,7 +132,7 @@
         }
 
         .toast-notification {
-            background: #000000;
+            background: rgba(0, 0, 0, 0.8);
             border: 2px solid #ff0000;
             border-radius: 12px;
             padding: 16px 28px;
@@ -107,10 +147,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .toast-notification.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .toast-notification.show { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -193,38 +230,3 @@
                 const rotarY = (x / box.width) * 20;
                 
                 this.style.transform = `rotateX(${rotarX}deg) rotateY(${rotarY}deg) scale(1.03)`;
-                this.style.boxShadow = "0 15px 35px rgba(255, 0, 0, 0.6)";
-                this.style.borderColor = "#ff4d4d";
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
-                this.style.boxShadow = "0 0 20px rgba(255, 0, 0, 0.4)";
-                this.style.borderColor = "#ff0000";
-            });
-        });
-
-        document.querySelectorAll('.btn-notify').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const appName = this.getAttribute('data-name');
-                const container = document.getElementById('notification-container');
-                
-                if (container) {
-                    const toast = document.createElement('div');
-                    toast.className = 'toast-notification';
-                    toast.innerHTML = `🚀 Preparando descarga de ${appName}...`;
-                    
-                    container.appendChild(toast);
-                    
-                    setTimeout(() => toast.classList.add('show'), 50);
-                    
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 3000);
-                }
-            });
-        });
-    </script>
-</body>
-</html>
