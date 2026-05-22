@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Plataforma de Descargas Premium</title>
-    <!-- Iconos premium -->
+    <!-- Iconos premium para redes sociales y categorías -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,13 +14,14 @@
             color: #ffffff;
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
+            padding-top: 90px;
+            padding-bottom: 100px; /* Espacio extra para que el botón flotante no tape nada */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
         }
 
-        /* 🔴 BARRA DE NAVEGACIÓN SUPERIOR FIJA (OCULTA POR DEFECTO EN EL INICIO) */
+        /* BARRA DE NAVEGACIÓN SUPERIOR FIJA */
         .navbar {
             position: fixed;
             top: 0;
@@ -28,7 +29,7 @@
             width: 100%;
             background: rgba(5, 0, 0, 0.95);
             border-bottom: 2px solid rgba(255, 0, 0, 0.3);
-            display: none; /* Se activa solo al entrar a las secciones */
+            display: none;
             justify-content: center;
             gap: 25px;
             padding: 18px;
@@ -62,7 +63,7 @@
         .main-section {
             display: none;
             width: 100%;
-            padding-top: 80px; /* Margen para que la barra de arriba no tape las tarjetas */
+            padding-top: 40px;
         }
 
         /* PANTALLA PRINCIPAL DE BIENVENIDA */
@@ -74,7 +75,7 @@
             gap: 25px;
             width: 100%;
             max-width: 650px;
-            margin: 80px auto 0 auto;
+            margin: 40px auto 0 auto;
         }
 
         .home-logo {
@@ -197,7 +198,7 @@
         .btn-tutorial { background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); }
         .btn-download { background: linear-gradient(90deg, #9d4edd 0%, #7b2cbf 100%); }
 
-        /* INSTAGRAM FLOTANTE */
+        /* 📸 DISEÑO DEL BOTÓN FLOTANTE DE INSTAGRAM */
         .instagram-float {
             position: fixed;
             bottom: 20px;
@@ -211,21 +212,31 @@
             align-items: center;
             gap: 10px;
             font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
             z-index: 999;
         }
 
+        .instagram-float:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+        }
+
+        /* 📝 CORRECCIÓN DEL PIE DE PÁGINA */
         .footer {
             margin-top: auto;
             padding-top: 60px;
-            font-size: 0.8rem;
-            color: #444444;
+            font-size: 0.9rem;
+            color: #777777;
             text-align: center;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- 🔴 BARRA SUPERIOR (MÁS COMPLETA, SE ACTIVA MEDIANTE EL SCRIPT) -->
+    <!-- BARRA SUPERIOR FIJA (APARECE EN SECCIONES) -->
     <div id="topNavbar" class="navbar">
         <span class="nav-link" onclick="irAlInicioBase()">Inicio</span>
         <span id="nav-juegos" class="nav-link" onclick="navegarInterno('juegos', 'nav-juegos')">Juegos</span>
@@ -288,12 +299,3 @@
                     <img class="card-img" src="https://flaticon.com" alt="Icono">
                     <div class="btn-group">
                         <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
-                        <a href="#" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar App</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECCIÓN: WINDOWS & OFFICE -->
-        <div id="pc" class="main-section">
-            <div class="section-header">
