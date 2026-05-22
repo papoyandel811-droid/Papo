@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>papoxv | Aplicaciones Pro</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: radial-gradient(circle, #2a0000 0%, #050000 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            padding: 120px 20px 40px 20px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 0, 0, 0.95);
+            border-bottom: 2px solid rgba(255, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 18px;
+            z-index: 1000;
+        }
+        .nav-link {
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .nav-link.active {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h1 { font-size: 2.5rem; color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: rgba(15, 5, 5, 0.7);
+            border: 2px solid #ff0000;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 350px;
+            justify-content: space-between;
+        }
+        .card-title { font-size: 1.4rem; font-weight: bold; }
+        .card-subtitle { font-size: 0.85rem; color: #ff4d4d; text-transform: uppercase; }
+        .card-img { width: 90px; height: 90px; }
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .btn-tutorial { background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); }
+        .btn-download { background: linear-gradient(90deg, #9d4edd 0%, #7b2cbf 100%); }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="juegos.html" class="nav-link">Juegos</a>
+        <a href="aplicaciones.html" class="nav-link active">Aplicaciones</a>
+        <a href="pc.html" class="nav-link">Windows & Office</a>
+    </div>
+
+    <div class="grid-container">
+        <div class="card">
+            <div>
+                <div class="card-title">Loquendo Voice</div>
+                <div class="card-subtitle">(Portable PC)</div>
+            </div>
+            <img class="card-img" src="https://flaticon.com" alt="Icono">
+            <div class="btn-group">
+                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
+                <a href="https://tpi.li" class="btn-action btn-download">Descargar</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
