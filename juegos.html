@@ -5,165 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Juegos</title>
     <style>
-        /* Reseteo básico */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        /* Fondo original */
-        body { 
-            background: radial-gradient(circle, #2a0000 0%, #050000 100%); 
-            color: #ffffff; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            min-height: 100vh; 
-            padding: 120px 20px 40px 20px; 
-        }
-        
-        /* Barra de navegación superior fija */
-        .navbar { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            background: rgba(5, 0, 0, 0.95); 
-            border-bottom: 2px solid rgba(255, 0, 0, 0.3); 
-            display: flex; 
-            justify-content: center; 
-            gap: 25px; 
-            padding: 18px; 
-            z-index: 1000; 
-        }
-        
-        .nav-link { 
-            color: #b3b3b3; 
-            text-decoration: none; 
-            font-size: 1rem; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-        }
-        
-        /* Brillo rojo para la sección activa */
-        .nav-link.active { 
-            color: #ff0000; 
-            text-shadow: 0 0 10px #ff0000; 
-        }
-        
-        /* Contenedor de rejilla para las tarjetas */
-        .grid-container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 30px; 
-            max-width: 1200px; 
-            margin: 40px auto 0 auto; 
-            justify-content: center; 
-        }
-        
-        /* Tarjeta original: Negro puro con fuerte brillo rojo */
-        .card { 
-            background: #000000; 
-            border: 2px solid #ff0000; 
-            border-radius: 20px; 
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); 
-            padding: 30px 25px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            text-align: center; 
-            min-height: 420px; 
-            width: 100%; 
-            max-width: 340px; 
-            justify-content: space-between; 
-        }
-        
-        .card-title { 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            margin-bottom: 2px; 
-        }
-        
-        .card-subtitle { 
-            font-size: 0.8rem; 
-            color: #ff0000; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            margin-bottom: 15px; 
-        }
-        
-        /* Imagen del juego */
-        .card-img { 
-            width: 100%; 
-            max-width: 140px; 
-            height: 80px; 
-            object-fit: contain; 
-            margin: 15px 0; 
-        }
-        
-        /* Grupo de botones */
-        .btn-group { 
-            width: 100%; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-        }
-        
-        .btn-action { 
-            display: block; 
-            width: 100%; 
-            padding: 12px; 
-            color: #ffffff; 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 0.9rem; 
-            border-radius: 15px; 
-            text-transform: uppercase; 
-            text-align: center; 
-            letter-spacing: 1px; 
-        }
-        
-        /* Colores planos originales de tus botones */
-        .btn-tutorial { 
-            background: #00a2ff; 
-            box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3); 
-        }
-        
-        .btn-download { 
-            background: #a200ff; 
-            box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); 
-        }
-        
-        .btn-action:hover { 
-            filter: brightness(1.2); 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: radial-gradient(circle, #2a0000 0%, #050000 100%); color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; min-height: 100vh; padding: 120px 20px 40px 20px; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 25px; padding: 18px; z-index: 1000; }
+        .nav-link { color: #b3b3b3; text-decoration: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; }
+        .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 40px auto 0 auto; justify-content: center; }
+        .card { background: #000000; border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); padding: 30px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 420px; width: 100%; max-width: 340px; justify-content: space-between; }
+        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
+        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; }
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .btn-action { display: block; width: 100%; padding: 12px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+        .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3); }
+        .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); }
+        .btn-action:hover { filter: brightness(1.2); }
     </style>
 </head>
 <body>
 
-    <!-- Menú corregido con rutas relativas para que no se rompa -->
     <div class="navbar">
-    <a href="index.html" class="nav-link">Inicio</a>
-    <a href="juegos.html" class="nav-link">Juegos</a>
-    <a href="aplicaciones.html" class="nav-link">Aplicaciones</a>
-    <a href="pc.html" class="nav-link">Windows & Office</a>
-</div>
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="juegos.html" class="nav-link active">Juegos</a>
+        <a href="aplicaciones.html" class="nav-link">Aplicaciones</a>
+        <a href="pc.html" class="nav-link">Windows & Office</a>
+    </div>
 
     <div class="grid-container">
-        
-        <!-- Tarjeta: Minecraft Shaders -->
         <div class="card">
             <div>
                 <div class="card-title">Minecraft Shaders</div>
                 <div class="card-subtitle">(Ultra HD)</div>
             </div>
-            <!-- Recuerda subir la imagen minecraft.png a tu repositorio -->
             <img class="card-img" src="minecraft.png" alt="Minecraft">
             <div class="btn-group">
-                <a href="LINK_DE_TU_TUTORIAL" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="LINK_DE_TU_DESCARGA" class="btn-action btn-download">Descargar</a>
+                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
+                <a href="#" class="btn-action btn-download">Descargar</a>
             </div>
         </div>
+    </div>
 
+    <!-- BOTÓN VOLVER AL INICIO INTEGRADO -->
+    <div style="display: flex; justify-content: center; margin: 60px 0 20px 0; width: 100%;">
+        <a href="index.html" style="display: inline-flex; align-items: center; padding: 15px 35px; background: #000000; border: 2px solid #ff0000; border-radius: 15px; color: #ffffff; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px #ff0000';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 0, 0, 0.6)';">
+            Volver al inicio
+        </a>
     </div>
 
 </body>
