@@ -79,7 +79,7 @@
             background: rgba(15, 5, 5, 0.8); 
         }
         
-        /* REJILLA CORREGIDA: Fuerza a las tarjetas a ordenarse de izquierda a derecha en orden perfecto */
+        /* REJILLA CORREGIDA: Alinea en orden hacia la izquierda */
         .grid-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -88,7 +88,7 @@
             margin: 0 auto; 
         }
         
-        /* TARJETA CON ALTO COMPATIBLE Y ESPACIO 3D */
+        /* TARJETA OSCURA EN PERSPECTIVA 3D */
         .card { 
             background: rgba(15, 5, 5, 0.5); 
             border: 2px solid #ff0000; 
@@ -128,7 +128,6 @@
 </head>
 <body>
 
-    <!-- MENÚ -->
     <div class="navbar">
         <a href="index.html" class="nav-link">Inicio</a>
         <a href="juegos.html" class="nav-link">Juegos</a>
@@ -138,7 +137,7 @@
     
     <div id="notification-container"></div>
     
-    <!-- BUSCADOR CON VÍNCULO DIRECTO (ONINPUT) -->
+    <!-- BARRA DE BÚSQUEDA VINCULADA NATIVAMENTE (ONINPUT) -->
     <div class="search-container">
         <input type="text" class="search-input" id="buscador-campo" oninput="ejecutarBusqueda()" placeholder="🔍 Buscar aplicación...">
     </div>
@@ -194,23 +193,76 @@
         </div>
     </div>
 
-    <!-- BOTÓN VOLVER -->
     <div style="display: flex; justify-content: center; margin: 60px 0 20px 0; width: 100%;">
         <a href="index.html" style="display: inline-flex; align-items: center; padding: 15px 35px; background: #000000; border: 2px solid #ff0000; border-radius: 15px; color: #ffffff; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px #ff0000';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 0, 0, 0.6)';">
             Volver al inicio
         </a>
     </div>
-
-    <!-- SCRIPT CLÁSICO REPARADO HASTA LA ÚLTIMA LÍNEA -->
-    <script type="text/javascript">
+<script type="text/javascript">
+    
+    // 1. FILTRADO GLOBAL CORREGIDO (LEE TODO EL TEXTO INTERNO SIN IMPORTAR CONTENEDORES)
+    function ejecutarBusqueda() {
+        var filtroTexto = document.getElementById('buscador-campo').value.toLowerCase().trim();
+        var todasLasCards = document.querySelectorAll('.grid-container .card');
         
-        // 1. SISTEMA DE BÚSQUEDA DIRECTA CORREGIDO (ONINPUT INFALIBLE)
-        function ejecutarBusqueda() {
-            var filtroTexto = document.getElementById('buscador-campo').value.toLowerCase().trim();
-            var todasLasCards = document.querySelectorAll('.grid-container .card');
+        todasLasCards.forEach(function(card) {
+            var todoElTexto = card.innerText.toLowerCase();
+            if (todoElTexto.indexOf(filtroTexto) > -1) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // 2. INTERACCIÓN DE ROTACIÓN 3D SEGUIDORA DEL RATÓN
+    document.querySelectorAll('.card').forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+            var area = this.getBoundingClientRect();
+            var calculoX = e.clientX - area.left - (area.width / 2);
+            var calculoY = e.clientY - area.top - (area.height / 2);
+            var gradoX = -(calculoY / area.height) * 20;
+            var gradoY = (calculoX / area.width) * 20;
             
-            todasLasCards.forEach(function(card) {
-                var elementoTitulo = card.querySelector('.card-title');
-                if (elementoTitulo) {
-                    var tituloTexto = elementoTitulo.textContent.toLowerCase();
-                    if (tituloTexto.indexOf(filtroTexto) > -1) {
+            this.style.transform = "rotateX(" + gradoX + "deg) rotateY(" + gradoY + "deg) scale(1.03)";
+            this.style.boxShadow = "0 15px 35px rgba(255, 0, 0, 0.6)";
+            this.style.borderColor = "#ff4d4d";
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+            this.style.boxShadow = "0 0 20px rgba(255, 0, 0, 0.4)";
+            this.style.borderColor = "#ff0000";
+        });
+    });
+
+    // 3. NOTIFICACIONES ALERTA AL PRESIONAR DESCARGAR
+    document.querySelectorAll('.btn-notify').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var appNombre = this.getAttribute('data-name');
+            var cajaNotificaciones = document.getElementById('notification-container');
+            if (cajaNotificaciones) {
+                var toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.innerHTML = '🚀 Preparando descarga de ' + appNombre + '...';
+                cajaNotificaciones.appendChild(toast);
+                
+                setTimeout(function() { toast.classList.add('show'); }, 50);
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                    setTimeout(function() { toast.remove(); }, 300);
+                }, 3000);
+            }
+        });
+    });
+
+    // 4. AUTO-OCULTADO DE ICONOS ROTOS
+    document.querySelectorAll(".card-img").forEach(function(img) {
+        img.addEventListener("error", function() {
+            this.style.display = "none";
+        });
+    });
+</script>
+</body>
+</html>
