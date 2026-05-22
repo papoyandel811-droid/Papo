@@ -6,7 +6,7 @@
     <title>papoxv | Aplicaciones Pro</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: radial-gradient(circle, #2a0000 0%, #050000 100%); color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; min-height: 100vh; padding: 120px 20px 40px 20px; }
+        body { background: radial-gradient(circle, #2a0000 0%, #050000 100%); color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; min-height: 100vh; padding: 120px 20px 40px 20px; perspective: 1000px; } /* perspective activa el 3D */
         .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 25px; padding: 18px; z-index: 1000; }
         .nav-link { color: #b3b3b3; text-decoration: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; }
         .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
@@ -18,15 +18,68 @@
         .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
         
         .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; justify-content: center; }
-        .card { background: #000000; border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); padding: 30px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 420px; width: 100%; max-width: 340px; justify-content: space-between; }
-        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
-        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
-        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; }
-        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        
+        /* TARJETAS CON EFECTO 3D (TILT) */
+        .card { 
+            background: #000000; 
+            border: 2px solid #ff0000; 
+            border-radius: 20px; 
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); 
+            padding: 30px 25px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            min-height: 420px; 
+            width: 100%; 
+            max-width: 340px; 
+            justify-content: space-between;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease, box-shadow 0.3s ease; /* Transición rápida para que siga al mouse suave */
+            will-change: transform;
+        }
+        
+        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; transform: translateZ(30px); } /* Saca el texto en 3D */
+        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; transform: translateZ(20px); }
+        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; transform: translateZ(40px); } /* La imagen resalta más hacia el frente */
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; transform: translateZ(25px); }
+        
         .btn-action { display: block; width: 100%; padding: 12px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
         .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3); }
         .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); }
         .btn-action:hover { filter: brightness(1.2); }
+
+        /* CONTENEDOR DE NOTIFICACIONES FLOTANTES */
+        #notification-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* DISEÑO DE LA ALERTA VACANA (NEÓN ROJO) */
+        .toast-notification {
+            background: #000000;
+            border: 2px solid #ff0000;
+            border-radius: 12px;
+            padding: 15px 25px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast-notification.show {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
@@ -38,11 +91,15 @@
         <a href="pc.html" class="nav-link">Windows & Office</a>
     </div>
 
+    <!-- Contenedor donde aparecerán las alertas -->
+    <div id="notification-container"></div>
+
     <div class="search-container">
         <input type="text" class="search-input" placeholder="🔍 Buscar aplicación...">
     </div>
 
     <div class="grid-container">
+        <!-- TARJETA 1: LOQUENDO VOICE -->
         <div class="card">
             <div>
                 <div class="card-title">Loquendo Voice</div>
@@ -51,10 +108,12 @@
             <img class="card-img" src="https://nocookie.net" alt="Loquendo">
             <div class="btn-group">
                 <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="https://cuty.io" class="btn-action btn-download">Descargar</a>
+                <!-- Agregamos el activador de la notificación en el botón de descargar -->
+                <a href="https://cuty.io" target="_blank" class="btn-action btn-download btn-notify" data-name="Loquendo Voice">Descargar</a>
             </div>
         </div>
 
+        <!-- TARJETA 2: CAPCUT PRO -->
         <div class="card">
             <div>
                 <div class="card-title">CapCut Pro</div>
@@ -63,10 +122,11 @@
             <img class="card-img" src="capcut.png" alt="CapCut">
             <div class="btn-group">
                 <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download">Descargar</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="CapCut Pro">Descargar</a>
             </div>
         </div>
 
+        <!-- TARJETA 3: TIKTOK -->
         <div class="card">
             <div>
                 <div class="card-title">TikTok</div>
@@ -75,7 +135,7 @@
             <img class="card-img" src="tiktok.png" alt="TikTok">
             <div class="btn-group">
                 <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download">Descargar</a>
+                <a href="#" class="btn-action btn-download btn-notify" data-name="TikTok">Descargar</a>
             </div>
         </div>
     </div>
@@ -87,6 +147,7 @@
     </div>
 
     <script>
+        // 1. SCRIPT DE FILTRADO DE BÚSQUEDA
         document.querySelector('.search-input').addEventListener('input', function(e) {
             let texto = e.target.value.toLowerCase().trim();
             document.querySelectorAll('.card').forEach(function(card) {
@@ -94,9 +155,42 @@
                 card.style.display = titulo.includes(texto) ? 'flex' : 'none';
             });
         });
-    </script>
-</body>
-</html>
+
+        // 2. SCRIPT PARA EL EFECTO INTERACTIVO 3D (TILT) EN LAS TARJETAS
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardX = e.clientX - cardRect.left - cardRect.width / 2;
+                const cardY = e.clientY - cardRect.top - cardRect.height / 2;
+                
+                // Calcula el ángulo de inclinación basado en la posición del mouse
+                const rotateX = -(cardY / cardRect.height) * 25; 
+                const rotateY = (cardX / cardRect.width) * 25;
+                
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+                card.style.boxShadow = `0 10px 30px rgba(255, 0, 0, 0.6)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                // Regresa la tarjeta a su estado original al sacar el mouse
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+                card.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.4)';
+            });
+        });
+
+        // 3. SCRIPT PARA EL SISTEMA DE NOTIFICACIONES FLOTANTES VACANAS
+        const notifyBtns = document.querySelectorAll('.btn-notify');
+        const container = document.getElementById('notification-container');
+
+        notifyBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const appName = btn.getAttribute('data-name');
+                
+                // Crear el elemento de la alerta
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.innerHTML = `🚀 Preparando descarga de ${appName}...`;
 
 
 
