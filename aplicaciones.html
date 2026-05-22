@@ -52,7 +52,6 @@
         
         .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; justify-content: center; }
         
-        /* TARJETAS TRANSLÚCIDAS MEJORADAS */
         .card { 
             background: rgba(15, 5, 5, 0.5) !important; 
             border: 2px solid #ff0000; 
@@ -204,13 +203,12 @@
     </div>
 
     <script type="text/javascript">
-        // Forzamos que las funciones se ejecuten de forma nativa e inmune
-        window.addEventListener('DOMContentLoaded', (event) => {
+        window.addEventListener('DOMContentLoaded', () => {
             const input = document.querySelector('.search-input');
             if (input) {
                 input.addEventListener('input', function(e) {
                     const texto = e.target.value.toLowerCase().trim();
-                    document.querySelectorAll('.card').forEach(function(card) {
+                    document.querySelectorAll('.card').forEach(card => {
                         const titulo = card.querySelector('.card-title').textContent.toLowerCase();
                         card.style.setProperty('display', titulo.includes(texto) ? 'flex' : 'none', 'important');
                     });
@@ -225,5 +223,6 @@
                     const rotarX = -(y / box.height) * 20;
                     const rotarY = (x / box.width) * 20;
                     
-                    this.style.setProperty('transform', `rotateX(${rotarX}deg) rotateY(${rotarY}deg) scale(1.03)`, 'important');
+                    this.style.setProperty('transform', 'rotateX(' + rotarX + 'deg) rotateY(' + rotarY + 'deg) scale(1.03)', 'important');
                     this.style.setProperty('box-shadow', '0 15px 35px rgba(255, 0, 0, 0.6)', 'important');
+                    this.style.setProperty('border-color', '#ff4d4d', 'important');
