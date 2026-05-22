@@ -14,13 +14,9 @@
             color: #ffffff; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             min-height: 100vh; 
-            padding-top: 100px;
+            padding: 120px 0 40px 0; 
             overflow-x: hidden;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             transition: background 0.8s ease;
         }
         
@@ -51,7 +47,7 @@
         /* TÍTULO CON CYBER GLITCH */
         .section-title {
             text-align: center; font-size: 2.2rem; font-weight: 900; color: #ffffff;
-            text-transform: uppercase; letter-spacing: 2px; margin: 20px 0 10px 0;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
         }
         .section-title.glitch { animation: glitchEffect 0.2s linear infinite; }
@@ -62,22 +58,22 @@
         }
 
         /* TACÓMETRO DE BÚSQUEDA */
-        .search-wrapper { position: relative; max-width: 500px; margin: 10px auto 20px auto; width: 100%; padding: 0 20px; }
+        .search-wrapper { position: relative; max-width: 500px; margin: 10px auto 30px auto; width: 100%; padding: 0 20px; }
         .search-input { width: 100%; padding: 14px 20px; background: rgba(0, 0, 0, 0.7); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; position: relative; z-index: 5; }
         .search-input:focus { box-shadow: 0 0 25px #ff0000; }
         .tacometro-arc { position: absolute; top: -5px; bottom: -5px; left: 15px; right: 15px; border: 3px solid transparent; border-top: 3px solid rgba(255,0,0,0.1); border-radius: 35px; pointer-events: none; transition: all 0.3s ease; z-index: 1; }
         .tacometro-arc.active { border-top-color: #ff0000; box-shadow: 0 -5px 15px rgba(255,0,0,0.5); transform: scaleX(1.02) scaleY(1.06); }
 
-        /* CONTENEDOR DE LA RULETA (Centrado vertical estricto bloqueado) */
+        /* CONTENEDOR SLIDER GENERAL OPTIMIZADO */
         .slider-wrapper {
             width: 100%;
-            height: 500px; /* Forzamos una zona de altura suficiente */
+            margin: 20px 0;
+            padding: 40px 0;
             overflow-x: auto;
             overflow-y: visible;
-            display: flex;
-            align-items: center; /* Bloquea las tarjetas al centro de la pantalla */
+            display: block; /* Desactiva el colapso de Flexbox anterior */
             scroll-behavior: smooth;
-            perspective: 1000px; /* La perspectiva se aplica directo al deslizador */
+            perspective: 1000px;
             -webkit-overflow-scrolling: touch;
         }
         .slider-wrapper::-webkit-scrollbar { display: none; }
@@ -93,7 +89,7 @@
             transform-style: preserve-3d;
         }
         
-        /* ESTILO BASE DE LAS TARJETAS ESTILO FREE FIRE */
+        /* ESTILO BASE DE LAS TARJETAS */
         .card { 
             background: rgba(12, 3, 3, 0.75) !important; 
             border: 2px solid rgba(255, 0, 0, 0.3); 
@@ -110,19 +106,19 @@
             flex-shrink: 0; 
             transform-style: preserve-3d;
             
-            /* Estado base secundario de la ruleta */
+            /* Estado inicial ruleta */
             opacity: 0.25;
             transform: scale(0.82) translateZ(-150px);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.4s ease;
         }
         
-        /* TARJETA ACTIVA AL CENTRO DE LA PANTALLA */
+        /* TARJETA CENTRAL EN ENFOQUE */
         .card.active-wheel { 
             opacity: 1 !important;
-            border-color: #ffb700; /* Marco de token dorado */
+            border-color: #ffb700; /* Marco dorado de Free Fire */
             border-width: 3px;
             box-shadow: 0 0 35px rgba(255, 183, 0, 0.65), inset 0 0 15px rgba(255, 0, 0, 0.25);
-            transform: scale(1.06) translateZ(60px); /* Sale al frente limpia sin hundirse */
+            transform: scale(1.06) translateZ(60px) translateY(-10px); /* Flota e incrementa tamaño limpia */
         }
         
         .card.hidden { width: 0 !important; padding: 0 !important; margin: 0 !important; border: none !important; opacity: 0 !important; pointer-events: none !important; overflow: hidden !important; }
@@ -178,7 +174,12 @@
         <input type="text" class="search-input" placeholder="🔍 Buscar aplicación...">
     </div>
 
-    <!-- CARRETE DE LA RULETA -->
+    <!-- RULETA COLOQUIAL -->
     <div class="slider-wrapper" id="sliderWrapper">
         <div class="grid-container" id="wheelGrid">
             
+            <div class="card" data-color="radial-gradient(circle, #250040 0%, #050000 100%)">
+                <div>
+                    <div class="card-title">Loquendo Voice</div>
+                    <div class="card-subtitle">(Portable PC)</div>
+                </div>
