@@ -3,152 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>papoxv | Descargas Premium</title>
+    <title>papoxv | Plataforma de Descargas Premium</title>
+    <!-- Iconos premium -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background: radial-gradient(circle, #3a0000 0%, #0b0000 100%);
+            background: radial-gradient(circle, #2a0000 0%, #050000 100%);
             color: #ffffff;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             min-height: 100vh;
-            padding: 30px 15px;
+            padding-top: 100px; /* Espacio para que el menú de arriba no tape el contenido */
+            padding-bottom: 80px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
+        /* BARRA DE NAVEGACIÓN SUPERIOR (IGUAL A LA DE LA IMAGEN) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 0, 0, 0.95);
+            border-bottom: 2px solid rgba(255, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.15);
         }
 
-        .logo {
-            font-size: 3.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000, 0 0 30px #ff0000;
-            margin-bottom: 5px;
-        }
-
-        .tagline {
-            font-size: 0.95rem;
+        .nav-link {
             color: #b3b3b3;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: color 0.3s, text-shadow 0.3s;
+            cursor: pointer;
         }
 
-        .container {
-            width: 100%;
-            max-width: 480px;
+        .nav-link:hover, .nav-link.active {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        }
+
+        /* TÍTULOS DE LAS SECCIONES */
+        .section-header {
+            text-align: center;
+            margin: 30px 0 40px 0;
+        }
+
+        .section-header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* CONTENEDOR EN COLUMNAS (PROPIO DE LA FOTO) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* SECCIONES INDEPENDIENTES */
+        .main-section {
+            display: none; /* Se ocultan y se muestran con el menú de arriba */
+        }
+
+        /* DISEÑO DE LAS TARJETA VERTICALES GRANDES */
+        .card {
+            background: rgba(15, 5, 5, 0.7);
+            border: 2px solid #ff0000;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(255, 0, 0, 0.1);
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-        }
-
-        .card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            border-radius: 14px;
-            padding: 16px;
-            display: flex;
             align-items: center;
+            text-align: center;
             justify-content: space-between;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            min-height: 400px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .card:hover {
-            border-color: #ff0000;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px #ff0000;
         }
 
-        .info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .title {
-            font-size: 1.15rem;
+        .card-title {
+            font-size: 1.4rem;
             font-weight: bold;
             color: #ffffff;
+            margin-bottom: 5px;
         }
 
-        .category {
-            font-size: 0.8rem;
+        .card-subtitle {
+            font-size: 0.85rem;
             color: #ff4d4d;
+            margin-bottom: 20px;
             text-transform: uppercase;
             font-weight: 600;
         }
 
-        .download-btn {
-            background: #ff0000;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 18px;
-            font-size: 0.9rem;
-            font-weight: bold;
+        .card-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 20px;
             border-radius: 8px;
-            text-transform: uppercase;
-            transition: background 0.2s;
-            box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
         }
 
-        .download-btn:hover {
-            background: #cc0000;
-            box-shadow: 0 0 15px #ff0000;
+        .btn-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* BOTONES INTERNOS DE LAS TARJETAS */
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-tutorial {
+            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+            box-shadow: 0 0 10px rgba(0, 114, 255, 0.4);
+        }
+
+        .btn-tutorial:hover {
+            box-shadow: 0 0 18px #0072ff;
+            filter: brightness(1.1);
+        }
+
+        .btn-download {
+            background: linear-gradient(90deg, #9d4edd 0%, #7b2cbf 100%);
+            box-shadow: 0 0 10px rgba(123, 44, 191, 0.4);
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 0 18px #7b2cbf;
+            filter: brightness(1.1);
+        }
+
+        /* INSTAGRAM FLOTANTE */
+        .instagram-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .footer {
-            margin-top: auto;
-            padding-top: 40px;
+            margin-top: 60px;
             font-size: 0.8rem;
-            color: #555555;
+            color: #444444;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">papoxv</div>
-        <p class="tagline">Juegos Mods & Apps Premium Sin Lag</p>
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR FIJA -->
+    <div class="navbar">
+        <span class="nav-link active" onclick="cambiarSeccion('inicio', this)">Inicio</span>
+        <span class="nav-link" onclick="cambiarSeccion('juegos', this)">Juegos</span>
+        <span class="nav-link" onclick="cambiarSeccion('apps', this)">Aplicaciones</span>
+        <span class="nav-link" onclick="cambiarSeccion('pc', this)">Windows & Office</span>
     </div>
 
-    <div class="container">
-        
-        <div class="card">
-            <div class="info">
-                <span class="category">🎮 Minecraft Mod</span>
-                <span class="title">Shaders Ultra HD v1.0</span>
-            </div>
-            <a href="#" class="download-btn">Obtener</a>
-        </div>
-
-        <div class="card">
-            <div class="info">
-                <span class="category">📱 Aplicación</span>
-                <span class="title">CapCut Pro Desbloqueado</span>
-            </div>
-            <a href="#" class="download-btn">Obtener</a>
-        </div>
-
-        <div class="card">
-            <div class="info">
-                <span class="category">🚀 Optimización</span>
-                <span class="title">Quitar Lag Free Fire (Celular)</span>
-            </div>
-            <a href="#" class="download-btn">Obtener</a>
-        </div>
-
+    <!-- PÁGINA DE INICIO (BIENVENIDA) -->
+    <div id="inicio" class="main-section" style="display: block; text-align: center; padding-top: 40px;">
+        <h1 style="font-size: 4rem; color: #ff0000; text-shadow: 0 0 20px #ff0000; font-weight: 900;">PAPOXV</h1>
+        <p style="font-size: 1.2rem; color: #b3b3b3; margin-top: 10px;">Usa el menú de arriba para explorar todo nuestro catálogo de archivos premium sin publicidad molesta.</p>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2026 papoxv. Todos los derechos reservados.</p>
+    <!-- SECCIÓN: JUEGOS -->
+    <div id="juegos" class="main-section">
+        <div class="section-header">
+            <h1><i class="fas fa-gamepad"></i> Juegos del PapoVerso</h1>
+        </div>
+        <div class="grid-container">
+            <!-- Tarjeta Juego 1 -->
+            <div class="card">
+                <div>
+                    <div class="card-title">Minecraft Shaders</div>
+                    <div class="card-subtitle">(Ultra HD - Lite)</div>
+                </div>
+                <!-- Si tienes una foto la pones en src, si no, se puede borrar la línea de abajo -->
+                <img class="card-img" src="https://flaticon.com" alt="Icono">
+                <div class="btn-group">
+                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
+                    <a href="#" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar Juego</a>
+                </div>
+            </div>
+            <!-- Tarjeta Juego 2 -->
+            <div class="card">
+                <div>
+                    <div class="card-title">Geometry Dash</div>
+                    <div class="card-subtitle">(Todo Desbloqueado)</div>
+                </div>
+                <img class="card-img" src="https://flaticon.com" alt="Icono">
+                <div class="btn-group">
+                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
+                    <a href="#" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar Juego</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-</body>
-</html>
+    <!-- SECCIÓN: APLICACIONES -->
+    <div id="apps" class="main-section">
+        <div class="section-header">
+            <h1><i class="fas fa-mobile-alt"></i> Aplicaciones Pro</h1>
+        </div>
+        <div class="grid-container">
+            <div class="card">
+                <div>
+                    <div class="card-title">CapCut Pro</div>
+                    <div class="card-subtitle">(Full Desbloqueado)</div>
+                </div>
+                <img class="card-img" src="https://flaticon.com" alt="Icono">
+                <div class="btn-group">
+                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
+                    <a href="#" class="btn-action btn-download"><i class="fas fa-download"></i> Descargar App</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: WINDOWS & OFFICE -->
+    <div id="pc" class="main-section">
+        <div class="section-header">
+            <h1><i class="fas fa-desktop"></i> Windows & Office</h1>
+        </div>
+        <div class="grid-container">
+            <div class="card">
+                <div>
+                    <div class="card-title">Windows 10 Pro</div>
+                    <div class="card-subtitle">(ISO Oficial Pre-activada)</div>
+                </div>
+                <img class="card-img" src="https://flaticon.com" alt="Icono">
+                <div class="btn-group">
+                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-eye"></i> Ver Tutorial</a>
