@@ -1,133 +1,233 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="notranslate" translate="no">
 <head>
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Aplicaciones Pro</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: radial-gradient(circle, #2a0000 0%, #050000 100%); color: #ffffff; font-family: 'Segoe UI', Roboto, sans-serif; min-height: 100vh; padding: 120px 20px 40px 20px; overflow-x: hidden; perspective: 1000px; }
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 25px; padding: 18px; z-index: 1000; }
+        
+        /* 2. AURORA LÍQUIDA (Fondo inteligente con transición suave) */
+        body { 
+            background: radial-gradient(circle, #2a0000 0%, #050000 100%); 
+            color: #ffffff; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            min-height: 100vh; 
+            padding: 120px 0 40px 0; 
+            overflow-x: hidden;
+            perspective: 1000px;
+            transition: background 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        /* NAVBAR SUPERIOR */
+        .navbar { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            background: rgba(5, 0, 0, 0.95); 
+            border-bottom: 2px solid rgba(255, 0, 0, 0.3); 
+            display: flex; 
+            justify-content: center; 
+            gap: 25px; 
+            padding: 18px; 
+            z-index: 1000; 
+        }
+        
         .nav-link { color: #b3b3b3; text-decoration: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; }
         .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-        .search-container { max-width: 500px; margin: 20px auto 30px auto; display: flex; justify-content: center; width: 100%; }
-        .search-input { width: 100%; padding: 14px 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
-        .search-input::placeholder { color: #888888; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
-        .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
-        .grid-container { display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto; justify-content: center; }
-        .card { background: rgba(15, 5, 5, 0.5); border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); padding: 30px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 420px; width: 100%; max-width: 340px; justify-content: space-between; transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer; transform-style: preserve-3d; }
-        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; transform: translateZ(20px); }
-        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; transform: translateZ(15px); }
-        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; transform: translateZ(25px); }
-        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; transform-style: preserve-3d; transform: translateZ(15px); }
-        .btn-action { display: block; width: 100%; padding: 12px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; }
+
+        /* 3. BARRA DE PROGRESO DE LECTURA (Línea milimétrica roja de scroll) */
+        .progress-bar-scroll {
+            position: fixed;
+            top: 56px; /* Justo abajo del navbar */
+            left: 0;
+            height: 3px;
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* 3. TÍTULO CON FALLA DE SEÑAL (Animación Cyber Glitch) */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+        .section-title.glitch {
+            animation: glitchEffect 0.2s linear infinite;
+        }
+        @keyframes glitchEffect {
+            0% { text-shadow: 2px -2px #ff0000, -2px 2px #00c6ff; transform: translate(2px, -1px); }
+            50% { text-shadow: -2px 2px #ff0000, 2px -2px #00c6ff; transform: translate(-1px, 2px); }
+            100% { text-shadow: 2px 2px #ff0000, -2px -2px #00c6ff; transform: translate(0, 0); }
+        }
+
+        /* 1. TACÓMETRO DE BÚSQUEDA (Need for Speed - Buscador Curvo con Medidor de RPM) */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 10px auto 40px auto;
+            width: 100%;
+            padding: 0 20px;
+        }
+        .search-input { 
+            width: 100%; 
+            padding: 14px 20px; 
+            background: rgba(0, 0, 0, 0.7); 
+            border: 2px solid #ff0000; 
+            border-radius: 30px; 
+            color: #ffffff; 
+            font-size: 1rem; 
+            outline: none; 
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); 
+            transition: all 0.3s ease; 
+            text-align: center; 
+            z-index: 5;
+            position: relative;
+        }
+        .search-input::placeholder { color: #666666; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .search-input:focus { box-shadow: 0 0 25px #ff0000; }
+        
+        /* Arcos del tacómetro digital que se iluminan al escribir */
+        .tacometro-arc {
+            position: absolute;
+            top: -5px; bottom: -5px; left: 15px; right: 15px;
+            border: 3px solid transparent;
+            border-top: 3px solid rgba(255,0,0,0.1);
+            border-radius: 35px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .tacometro-arc.active {
+            border-top-color: #ff0000;
+            box-shadow: 0 -5px 15px rgba(255,0,0,0.5);
+            transform: scaleX(1.03) scaleY(1.08);
+        }
+
+        /* 1. SISTEMA DE CARTAS STEAM DECK (Carrusel Horizontal Infinito Centrado) */
+        .slider-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: flex-start;
+            scroll-behavior: smooth;
+        }
+        /* Ocultar barra de scroll rústica */
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+        
+        .grid-container { 
+            display: flex; 
+            gap: 40px; 
+            padding: 0 40%; /* Deja espacio a los lados para centrar las cartas estilo consola */
+        }
+        
+        /* TARJETAS TRANSLÚCIDAS CON DINÁMICA DE ENFOQUE */
+        .card { 
+            background: rgba(15, 5, 5, 0.6); 
+            border: 2px solid rgba(255, 0, 0, 0.3); 
+            border-radius: 20px; 
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+            padding: 30px 25px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            min-height: 420px; 
+            width: 320px; /* Tamaño fijo para el carrusel de Steam Deck */
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+        }
+        
+        /* La tarjeta que tiene el mouse encima o queda enfocada resalta al estilo Steam Deck */
+        .card:hover, .card.focused { 
+            transform: scale(1.08) translateY(-10px);
+            border-color: #ff0000;
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
+            background: rgba(25, 5, 5, 0.5);
+        }
+        
+        .card-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 2px; }
+        .card-subtitle { font-size: 0.8rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+        .card-img { width: 100%; max-width: 140px; height: 80px; object-fit: contain; margin: 15px 0; }
+        
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .btn-action { display: block; width: 100%; padding: 12px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; transition: all 0.3s ease; }
         .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3); }
         .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.3); }
-        .btn-tutorial:hover { transform: translateZ(25px) scale(1.04); box-shadow: 0 10px 20px rgba(0, 162, 255, 0.6); }
-        .btn-download:hover { transform: translateZ(25px) scale(1.04); box-shadow: 0 10px 20px rgba(162, 0, 255, 0.6); }
+        .btn-action:hover { filter: brightness(1.2); transform: translateY(-3px); }
+
+        /* NOTIFICACIONES */
         #notification-container { position: fixed; bottom: 30px; left: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast-notification { background: rgba(0, 0, 0, 0.8); border: 2px solid #ff0000; border-radius: 12px; padding: 16px 28px; color: #ffffff; font-weight: bold; font-size: 0.95rem; box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); display: flex; align-items: center; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .toast-notification { background: rgba(0, 0, 0, 0.9); border: 2px solid #ff0000; border-radius: 12px; padding: 16px 28px; color: #ffffff; font-weight: bold; box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); display: flex; align-items: center; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
         .toast-notification.show { opacity: 1; transform: translateY(0); }
+
+        /* 3. REPRODUCTOR EXPANSIV0 HOLOGRÁFICO (Apple Store Overlay) */
+        .video-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .video-overlay.active { opacity: 1; pointer-events: auto; }
+        .hologram-window {
+            background: #050000;
+            border: 2px solid #ff0000;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            box-shadow: 0 0 40px #ff0000;
+            transform: scale(0.7) rotateY(15deg);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+        .video-overlay.active .hologram-window { transform: scale(1) rotateY(0deg); }
+        .video-placeholder { width: 100%; height: 350px; background: rgba(20,0,0,0.8); border: 1px dashed #ff0000; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 20px 0; color: #888; font-weight: bold; }
+        .btn-close { background: #ff0000; color: white; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
 <body>
+
     <div class="navbar">
         <a href="index.html" class="nav-link">Inicio</a>
         <a href="juegos.html" class="nav-link">Juegos</a>
         <a href="aplicaciones.html" class="nav-link active">Aplicaciones</a>
         <a href="pc.html" class="nav-link">Windows & Office</a>
     </div>
+
+    <!-- Barra milimétrica de progreso -->
+    <div class="progress-bar-scroll" id="scrollBar"></div>
+
     <div id="notification-container"></div>
-    <div class="search-container">
-        <input type="text" class="search-input" placeholder="🔍 Buscar aplicación...">
-    </div>
-    <div class="grid-container">
-        <div class="card">
-            <div>
-                <div class="card-title">Loquendo Voice</div>
-                <div class="card-subtitle">(Portable PC)</div>
-            </div>
-            <img class="card-img" src="https://nocookie.net" alt="Loquendo">
-            <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="https://cuty.io" target="_blank" class="btn-action btn-download btn-notify" data-name="Loquendo Voice">Descargar</a>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div class="card-title">CapCut Pro</div>
-                <div class="card-subtitle">(Full Desbloqueado)</div>
-            </div>
-            <img class="card-img" src="capcut.png" alt="CapCut">
-            <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="CapCut Pro">Descargar</a>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div class="card-title">TikTok</div>
-                <div class="card-subtitle">(Full Desbloqueado)</div>
-            </div>
-            <img class="card-img" src="tiktok.png" alt="TikTok">
-            <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial">Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="TikTok">Descargar</a>
-            </div>
+
+    <!-- Ventana expansible estilo Apple Store -->
+    <div class="video-overlay" id="videoOverlay">
+        <div class="hologram-window">
+            <h2 id="overlayTitle" style="color: #ff0000; text-transform: uppercase; letter-spacing: 1px;">Tutorial</h2>
+            <div class="video-placeholder">📺 REPRODUCTOR DE TUTORIAL DE PAPOXV</div>
+            <button class="btn-close" id="closeOverlay">Cerrar</button>
         </div>
     </div>
-    <div style="display: flex; justify-content: center; margin: 60px 0 20px 0; width: 100%;">
-        <a href="index.html" style="display: inline-flex; align-items: center; padding: 15px 35px; background: #000000; border: 2px solid #ff0000; border-radius: 15px; color: #ffffff; font-weight: bold; text-decoration: none; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px #ff0000';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(255, 0, 0, 0.6)';">
-            Volver al inicio
-        </a>
-    </div>
-    <script type="text/javascript">
-        window.addEventListener('DOMContentLoaded', () => {
-            const input = document.querySelector('.search-input');
-            if (input) {
-                input.addEventListener('input', function(e) {
-                    const texto = e.target.value.toLowerCase().trim();
-                    document.querySelectorAll('.card').forEach(card => {
-                        const titulo = card.querySelector('.card-title').textContent.toLowerCase();
-                        card.style.display = titulo.includes(texto) ? 'flex' : 'none';
-                    });
-                });
-            }
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('mousemove', function(e) {
-                    const box = this.getBoundingClientRect();
-                    const x = e.clientX - box.left - (box.width / 2);
-                    const y = e.clientY - box.top - (box.height / 2);
-                    const rotarX = -(y / box.height) * 20;
-                    const rotarY = (x / box.width) * 20;
-                    this.style.transform = `rotateX(${rotarX}deg) rotateY(${rotarY}deg) scale(1.03)`;
-                    this.style.boxShadow = "0 15px 35px rgba(255, 0, 0, 0.6)";
-                    this.style.borderColor = "#ff4d4d";
-                });
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
-                    this.style.boxShadow = "0 0 20px rgba(255, 0, 0, 0.4)";
-                    this.style.borderColor = "#ff0000";
-                });
-            });
-            document.querySelectorAll('.btn-notify').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const appName = this.getAttribute('data-name');
-                    const container = document.getElementById('notification-container');
-                    if (container) {
-                        const toast = document.createElement('div');
-                        toast.className = 'toast-notification';
-                        toast.innerHTML = '🚀 Preparando descarga de ' + appName + '...';
-                        container.appendChild(toast);
-                        setTimeout(() => toast.classList.add('show'), 50);
-                        setTimeout(() => {
-                            toast.classList.remove('show');
-                            setTimeout(() => toast.remove(), 300);
-                        }, 3000);
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+
+    <h1 class="section-title" id="mainTitle">Aplicaciones Pro</h1>
+
