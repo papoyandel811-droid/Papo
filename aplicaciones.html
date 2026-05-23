@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>papoxv | Aplicaciones</title>
-    <!-- FontAwesome para los íconos de las flechas y botones -->
+    <!-- FontAwesome Oficial para los íconos -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin:0; padding:0; }
@@ -18,17 +18,13 @@
         .search-input { width: 100%; padding: 12px 20px; background: rgba(15, 2, 2, 0.7) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
         .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(25, 4, 4, 0.8) !important; }
         
-        /* CONTENEDOR DEL CARRUSEL Y LAS FLECHAS */
-        .carousel-container { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
         .main-content { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-        
-        /* Se cambió overflow-x a hidden para un deslizamiento controlado por JS */
-        .carousel-wrapper { width: 100%; overflow-x: hidden; scroll-behavior: smooth; display: flex; align-items: center; padding: 60px 0; cursor: grab; }
-        .carousel-wrapper:active { cursor: grabbing; }
-        .grid-container { display: flex; gap: 40px; padding: 0 calc(50vw - 140px); transition: transform 0.3s ease-out; }
+        .carousel-wrapper { width: 100%; overflow-x: auto; scroll-behavior: smooth; display: flex; align-items: center; padding: 60px 0; cursor: grab; scrollbar-width: none; }
+        .carousel-wrapper::-webkit-scrollbar { display: none; }
+        .grid-container { display: flex; gap: 40px; padding: 0 calc(50vw - 140px); }
         
         /* TARJETAS: Efecto Cristal Esmerilado Cyberpunk */
-        .card { background: linear-gradient(135deg, rgba(25, 5, 5, 0.78) 0%, rgba(10, 2, 2, 0.9) 100%) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 2px solid rgba(255, 0, 0, 0.15); border-radius: 20px; padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; height: 400px; width: 280px; min-width: 280px; justify-content: space-between; transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; transform-style: preserve-3d; opacity: 0.35; transform: scale(0.85); }
+        .card { background: linear-gradient(135deg, rgba(25, 5, 5, 0.78) 0%, rgba(10, 2, 2, 0.9) 100%) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 2px solid rgba(255, 0, 0, 0.15); border-radius: 20px; padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; height: 400px; width: 280px; min-width: 280px; justify-content: space-between; transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease; transform-style: preserve-3d; opacity: 0.35; transform: scale(0.85); cursor: pointer; }
         .card.active-card { opacity: 1; border-color: #ff0000; box-shadow: 0 0 35px rgba(255, 0, 0, 0.6); transform: scale(1.12) translateZ(20px); }
         .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 2px; }
         .card-subtitle { font-size: 0.75rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; }
@@ -41,14 +37,8 @@
         .btn-download { background: #a200ff; }
         .btn-action i { margin-right: 5px; }
         
-        /* NUEVO: Estilos para las Flechas de Navegación */
-        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 2, 2, 0.8); border: 2px solid rgba(255, 0, 0, 0.5); color: white; width: 50px; height: 50px; border-radius: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
-        .nav-arrow:hover { background: #ff0000; border-color: #ff0000; box-shadow: 0 0 20px #ff0000; scale: 1.1; }
-        .arrow-left { left: 5vw; }
-        .arrow-right { right: 5vw; }
-        
-        /* BOTÓN INFERIOR: Cristal Translúcido */
-        .back-home-container { display: flex; justify-content: center; margin: 20px 0; width: 100%; }
+        /* BOTÓN INFERIOR: Se corrigió para que siempre esté abajo y centrado */
+        .back-home-container { display: flex; justify-content: center; margin: 40px 0; width: 100%; clear: both; }
         .btn-back-home { display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; background: rgba(15, 2, 2, 0.7) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 2px solid #ff0000; border-radius: 30px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transition: all 0.3s ease; font-size: 0.85rem; }
         .btn-back-home:hover { background: #ff0000 !important; box-shadow: 0 0 25px #ff0000; transform: scale(1.05); }
         
@@ -62,56 +52,50 @@
     <div id="notification-container"></div>
     <div class="search-container"><input type="text" class="search-input" id="buscador-campo" oninput="ejecutarBusqueda()" placeholder="🔍 Buscar aplicación..."></div>
     
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="main-content">
-        <!-- Contenedor relativo para posicionar las flechas encima -->
-        <div class="carousel-container">
-            <!-- Flechas de navegación -->
-            <button class="nav-arrow arrow-left" id="btn-prev"><i class="fas fa-chevron-left"></i></button>
-            
-            <div class="carousel-wrapper" id="carousel">
-                <div class="grid-container" id="grid">
-                    <!-- Tarjeta 1 -->
-                    <div class="card">
-                        <div><div class="card-title">CapCut Pro</div><div class="card-subtitle">(Premium Mod)</div></div>
-                        <div class="img-container"><img class="card-img" src="https://static.vecteezy.com/system/resources/previews/067/065/640/non_2x/capcut-logo-square-rounded-capcut-logo-capcut-logo-free-download-free-png.png" alt="CapCut"></div>
-                        <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io/UVkpvxOWN4Gr" class="btn-action btn-download btn-notify" data-name="CapCut Pro"><i class="fas fa-download"></i> Descargar</a></div>
-                    </div>
-                    <!-- Tarjeta 2 -->
-                    <div class="card">
-                        <div><div class="card-title">OBS_Lite</div><div class="card-subtitle">(PC)</div></div>
-                        <div class="img-container"><img class="card-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/1280px-OBS_Studio_Logo.svg.png" alt="obs studio"></div>
-                        <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io/tfvJsHSet" class="btn-action btn-download btn-notify" data-name="OBS_Lite"><i class="fas fa-download"></i> Descargar</a></div>
-                    </div>
-                    <!-- Tarjeta 3 -->
-                    <div class="card">
-                        <div><div class="card-title">Loquendo Voice</div><div class="card-subtitle">(PC)</div></div>
-                        <div class="img-container"><img class="card-img" src="https://wikimedia.org" alt="Loquendo"></div>
-                        <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="Loquendo Voice"><i class="fas fa-download"></i> Descargar</a></div>
-                    </div>
-                    <!-- Tarjeta 4 (Corregida y cerrada) -->
-                              <div class="card">
+        <div class="carousel-wrapper" id="carousel">
+            <div class="grid-container" id="grid">
+                <!-- Tarjeta 1 -->
+                <div class="card">
+                    <div><div class="card-title">CapCut Pro</div><div class="card-subtitle">(Premium Mod)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://vecteezy.com" alt="CapCut"></div>
+                    <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="CapCut Pro"><i class="fas fa-download"></i> Descargar</a></div>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="card">
+                    <div><div class="card-title">OBS_Lite</div><div class="card-subtitle">(PC)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://wikimedia.org" alt="obs studio"></div>
+                    <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="OBS_Lite"><i class="fas fa-download"></i> Descargar</a></div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="card">
+                    <div><div class="card-title">Loquendo Voice</div><div class="card-subtitle">(PC)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://wikimedia.org" alt="Loquendo"></div>
+                    <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="Loquendo Voice"><i class="fas fa-download"></i> Descargar</a></div>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="card">
                     <div><div class="card-title">Spotify Plus</div><div class="card-subtitle">(PC)</div></div>
-                    <div class="img-container"><img class="card-img" src="https://flaticon.com" alt="Spotify"></div>
+                    <div class="img-container"><img class="card-img" src="https://wikimedia.org" alt="Spotify"></div>
                     <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a></div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- AQUÍ SE CIERRA CORRECTAMENTE EL MAIN-CONTENT -->
 
-    <!-- EL BOTÓN SE QUEDA ABAJO EN SU SITIO ORIGINAL -->
+    <!-- BOTÓN DE INICIO COMPLETAMENTE SEPARADO ABAJO -->
     <div class="back-home-container">
         <a href="index.html" class="btn-back-home"><i class="fas fa-home"></i> Volver al Inicio</a>
     </div>
 
     <script>
-        const carousel = document.getElementById('carousel'); 
-        const cards = document.querySelectorAll('.card');
-
-        function updateCarouselFocus() {
+        const carousel = document.getElementById('carousel'); const cards = document.querySelectorAll('.card');
+        
+            function updateCarouselFocus() {
             const screenCenter = window.innerWidth / 2; let closestCard = null; let minDistance = Infinity;
             cards.forEach(card => {
-                if(card.style.display === "none") return;
-                
+                if (card.style.display === "none") return;
                 const cardRect = card.getBoundingClientRect(); const cardCenter = cardRect.left + cardRect.width / 2; const distance = Math.abs(screenCenter - cardCenter);
                 card.classList.remove('active-card'); card.style.transform = 'scale(0.85) rotateX(0deg) rotateY(0deg) translateZ(0)';
                 if (distance < minDistance) { minDistance = distance; closestCard = card; }
@@ -123,29 +107,22 @@
         
         let isDown = false; let startX; let scrollLeft;
         carousel.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft; });
-        carousel.addEventListener('mouseleave', () => isDown = false); 
-        carousel.addEventListener('mouseup', () => isDown = false);
+        carousel.addEventListener('mouseleave', () => isDown = false); carousel.addEventListener('mouseup', () => isDown = false);
         carousel.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - carousel.offsetLeft; const walk = (x - startX) * 1.5; carousel.scrollLeft = scrollLeft - walk; updateCarouselFocus(); });
         
-        // Lógica de clic sobre las tarjetas laterales para desplazarse
+        // SISTEMA DE NAVEGACIÓN POR CLIC EN TARJETAS
         cards.forEach(card => {
             card.addEventListener('click', (e) => {
-                // Si el usuario hace clic en los botones de "Descargar" o "Tutorial", no movemos el carrusel
-                if (e.target.closest('.btn-action')) return;
-
-                // Si se hace clic en una tarjeta que NO es la activa, la centramos
+                if (e.target.closest('.btn-action')) return; // No mover si da clic en los botones internos
                 if (!card.classList.contains('active-card')) {
                     const screenCenter = window.innerWidth / 2;
                     const cardRect = card.getBoundingClientRect();
                     const cardCenter = cardRect.left + cardRect.width / 2;
-                    
-                    // Calculamos la distancia exacta necesaria para centrarla en la pantalla
                     const distanceToMove = cardCenter - screenCenter;
                     carousel.scrollBy({ left: distanceToMove, behavior: 'smooth' });
                 }
             });
 
-            // Tu efecto de inclinación 3D original
             card.addEventListener('mousemove', (e) => {
                 if (!card.classList.contains('active-card')) return;
                 const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left - (rect.width / 2); const y = e.clientY - rect.top - (rect.height / 2);
@@ -169,7 +146,7 @@
             cards.forEach(card => { let titleElement = card.querySelector('.card-title'); if (titleElement) { card.style.display = titleElement.textContent.toLowerCase().includes(input) ? "flex" : "none"; } });
             updateCarouselFocus();
         }
-        
+
         document.querySelectorAll('.btn-notify').forEach(button => {
             button.addEventListener('click', function(e) {
                 let appName = this.getAttribute('data-name'); let container = document.getElementById('notification-container');
