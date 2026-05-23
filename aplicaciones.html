@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body { 
             background: radial-gradient(circle, #2a0000 0%, #050000 100%); 
             color: #ffffff; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             min-height: 100vh; 
-            padding: 80px 0 20px 0; /* Espaciado reducido para centrar en móviles */
+            padding-top: 80px;
             overflow-x: hidden; 
             perspective: 1000px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            /* Centra verticalmente todo el contenido en la pantalla */
+            justify-content: center; 
+            align-items: center;
         }
+        
         .navbar { 
             position: fixed; top: 0; left: 0; width: 100%; 
             background: rgba(5, 0, 0, 0.95); 
@@ -28,7 +32,7 @@
         .nav-link { color: #b3b3b3; text-decoration: none; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; }
         .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
         
-        .search-container { max-width: 500px; margin: 15px auto 5px auto; display: flex; justify-content: center; width: 100%; padding: 0 20px; }
+        .search-container { max-width: 500px; margin: 10px auto; display: flex; justify-content: center; width: 100%; padding: 0 20px; }
         .search-input { 
             width: 100%; padding: 12px 20px; background: rgba(0, 0, 0, 0.6); 
             border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; 
@@ -37,28 +41,29 @@
         }
         .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
         
-        /* Contenedor del carrusel centrado verticalmente */
+        /* Contenedor del carrusel */
         .carousel-wrapper {
             width: 100%; 
             overflow-x: auto; 
             scroll-behavior: smooth;
             display: flex; 
             align-items: center; 
-            padding: 30px 0;
+            padding: 40px 0;
             cursor: grab; 
             scrollbar-width: none;
-            -webkit-overflow-scrolling: touch; /* Suaviza el deslizado en iPhones */
+            -webkit-overflow-scrolling: touch;
         }
         .carousel-wrapper::-webkit-scrollbar { display: none; }
         .carousel-wrapper:active { cursor: grabbing; }
         
         .grid-container { 
             display: flex; 
-            gap: 35px; 
-            padding: 0 calc(50vw - 140px); /* Ajuste dinámico para centrar la activa */
+            gap: 20px; 
+            /* Relleno dinámico para permitir que la primera y la última tarjeta lleguen al centro */
+            padding: 0 calc(50vw - 140px); 
         }
         
-        /* TARJETAS CON ANIMACIÓN FLUIDA EN NEÓN */
+        /* TARJETAS CON ANIMACIÓN DE ESCALA */
         .card { 
             background: rgba(15, 5, 5, 0.7); 
             border: 2px solid rgba(255, 0, 0, 0.15); 
@@ -68,22 +73,23 @@
             flex-direction: column; 
             align-items: center; 
             text-align: center; 
-            height: 410px; 
+            height: 400px; 
             width: 280px; 
             min-width: 280px; 
             justify-content: space-between; 
-            transition: transform 0.25s ease-out, box-shadow 0.25s ease-out, border-color 0.25s ease-out, opacity 0.25s ease-out; 
+            /* Transición ultra rápida y fluida para el cambio de tamaño al deslizar */
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; 
             transform-style: preserve-3d; 
             opacity: 0.35;
-            transform: scale(0.85);
+            transform: scale(0.82);
         }
         
-        /* Efecto cuando la tarjeta toma el centro exacto */
+        /* Tarjeta central activa */
         .card.active-card {
             opacity: 1;
             border-color: #ff0000;
-            box-shadow: 0 0 35px rgba(255, 0, 0, 0.7);
-            transform: scale(1.06) translateZ(20px);
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.6);
+            transform: scale(1.08) translateZ(20px);
         }
 
         .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 2px; }
@@ -92,18 +98,15 @@
         .img-container { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; margin: 5px 0; }
         .card-img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
-        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 10px; opacity: 0.2; transition: opacity 0.25s ease; }
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 10px; opacity: 0.1; transition: opacity 0.2s ease; }
         .card.active-card .btn-group { opacity: 1; }
         
         .btn-action { display: block; width: 100%; padding: 11px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.85rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
         .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.1); }
         .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.1); }
-        
-        .card.active-card .btn-tutorial:hover { box-shadow: 0 8px 18px rgba(0, 162, 255, 0.5); }
-        .card.active-card .btn-download:hover { box-shadow: 0 8px 18px rgba(162, 0, 255, 0.5); }
         .btn-action i { margin-right: 5px; }
         
-        .back-home-container { display: flex; justify-content: center; margin: 10px 0; width: 100%; }
+        .back-home-container { display: flex; justify-content: center; margin: 20px 0; width: 100%; }
         .btn-back-home { 
             display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; background: rgba(0, 0, 0, 0.8); 
             color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 2px solid #ff0000; 
@@ -124,6 +127,7 @@
         <a href="pc.html" class="nav-link">Windows & Office</a>
     </div>
     <div id="notification-container"></div>
+    
     <div class="search-container">
         <input type="text" class="search-input" id="buscador-campo" oninput="ejecutarBusqueda()" placeholder="🔍 Buscar aplicación...">
     </div>
@@ -179,13 +183,12 @@
                     <div class="card-subtitle">(PC)</div>
                 </div>
                 <div class="img-container">
-
-                <img class="card-img" src="https://flaticon.com" alt="Spotify">
-            </div>
-            <div class="btn-group">
-                <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
-                <a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a>
-            </div>
+                    <img class="card-img" src="https://flaticon.com" alt="Spotify">
+                </div>
+                <div class="btn-group">
+                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                    <a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a>
+                </div>
         </div>
     </div>
 
