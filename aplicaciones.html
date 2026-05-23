@@ -117,6 +117,20 @@
                 setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
             });
         });
+                document.querySelectorAll('.btn-action').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                if (btn.closest('.card').classList.contains('active-card')) {
+                    btn.style.transition = "all 0.3s ease";
+                    btn.style.transform = "translateZ(50px) scale(1.05)";
+                    btn.style.boxShadow = btn.classList.contains('btn-tutorial') ? "0 10px 25px rgba(0, 162, 255, 0.8)" : "0 10px 25px rgba(162, 0, 255, 0.8)";
+                }
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = "translateZ(20px) scale(1)";
+                btn.style.boxShadow = "none";
+            });
+        });
+
     </script>
 </body>
 </html>
