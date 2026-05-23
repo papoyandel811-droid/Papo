@@ -6,114 +6,52 @@
     <title>papoxv | Aplicaciones</title>
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+        * { box-sizing: border-box; margin:0; padding:0; }
         body { 
-            background: radial-gradient(circle, #2a0000 0%, #050000 100%); 
-            color: #ffffff; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            min-height: 100vh; 
-            padding-top: 80px;
-            overflow-x: hidden; 
-            perspective: 1000px;
-            display: flex;
-            flex-direction: column;
-            /* Centra verticalmente todo el contenido en la pantalla */
-            justify-content: center; 
-            align-items: center;
+            background: radial-gradient(circle, #2a0000 0%, #050000 100%) !important; color: #ffffff; 
+            font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; perspective: 1000px;
+            display: flex; flex-direction: column;
         }
-        
         .navbar { 
-            position: fixed; top: 0; left: 0; width: 100%; 
-            background: rgba(5, 0, 0, 0.95); 
-            border-bottom: 2px solid rgba(255, 0, 0, 0.3); 
-            display: flex; justify-content: center; gap: 15px; padding: 15px; z-index: 1000; 
+            position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); 
+            border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 15px; padding: 15px; z-index: 1000; 
         }
         .nav-link { color: #b3b3b3; text-decoration: none; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; }
         .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-        
-        .search-container { max-width: 500px; margin: 10px auto; display: flex; justify-content: center; width: 100%; padding: 0 20px; }
+        .search-container { max-width: 500px; margin: 100px auto 10px auto; display: flex; justify-content: center; width: 100%; padding: 0 20px; }
         .search-input { 
-            width: 100%; padding: 12px 20px; background: rgba(0, 0, 0, 0.6); 
-            border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; 
-            font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); 
+            width: 100%; padding: 12px 20px; background: rgba(0, 0, 0, 0.6); border: 2px solid #ff0000; 
+            border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); 
             transition: all 0.3s ease; text-align: center; 
         }
-        .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(15, 5, 5, 0.8); }
-        
-        /* Contenedor del carrusel */
-        .carousel-wrapper {
-            width: 100%; 
-            overflow-x: auto; 
-            scroll-behavior: smooth;
-            display: flex; 
-            align-items: center; 
-            padding: 40px 0;
-            cursor: grab; 
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
+        .main-content { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .carousel-wrapper { width: 100%; overflow-x: auto; scroll-behavior: smooth; display: flex; align-items: center; padding: 60px 0; cursor: grab; scrollbar-width: none; }
         .carousel-wrapper::-webkit-scrollbar { display: none; }
-        .carousel-wrapper:active { cursor: grabbing; }
-        
-        .grid-container { 
-            display: flex; 
-            gap: 20px; 
-            /* Relleno dinámico para permitir que la primera y la última tarjeta lleguen al centro */
-            padding: 0 calc(50vw - 140px); 
-        }
-        
-        /* TARJETAS CON ANIMACIÓN DE ESCALA */
+        .grid-container { display: flex; gap: 40px; padding: 0 calc(50vw - 140px); }
         .card { 
-            background: rgba(15, 5, 5, 0.7); 
-            border: 2px solid rgba(255, 0, 0, 0.15); 
-            border-radius: 20px; 
-            padding: 22px 18px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            text-align: center; 
-            height: 400px; 
-            width: 280px; 
-            min-width: 280px; 
-            justify-content: space-between; 
-            /* Transición ultra rápida y fluida para el cambio de tamaño al deslizar */
-            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; 
-            transform-style: preserve-3d; 
-            opacity: 0.35;
-            transform: scale(0.82);
+            background: rgba(15, 5, 5, 0.7); border: 2px solid rgba(255, 0, 0, 0.15); border-radius: 20px; 
+            padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; 
+            height: 400px; width: 280px; min-width: 280px; justify-content: space-between; 
+            transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease; 
+            transform-style: preserve-3d; opacity: 0.35; transform: scale(0.85);
         }
-        
-        /* Tarjeta central activa */
-        .card.active-card {
-            opacity: 1;
-            border-color: #ff0000;
-            box-shadow: 0 0 35px rgba(255, 0, 0, 0.6);
-            transform: scale(1.08) translateZ(20px);
-        }
-
+        .card.active-card { opacity: 1; border-color: #ff0000; box-shadow: 0 0 35px rgba(255, 0, 0, 0.6); transform: scale(1.12) translateZ(20px); }
         .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 2px; }
         .card-subtitle { font-size: 0.75rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; }
-        
-        .img-container { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; margin: 5px 0; }
+        .img-container { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; margin: 5px 0; transform-style: preserve-3d; transform: translateZ(35px); }
         .card-img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
-        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 10px; opacity: 0.1; transition: opacity 0.2s ease; }
+        .btn-group { width: 100%; display: flex; flex-direction: column; gap: 10px; opacity: 0.1; transition: opacity 0.2s ease; transform-style: preserve-3d; transform: translateZ(20px); }
         .card.active-card .btn-group { opacity: 1; }
-        
         .btn-action { display: block; width: 100%; padding: 11px; color: #ffffff; text-decoration: none; font-weight: bold; font-size: 0.85rem; border-radius: 15px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
-        .btn-tutorial { background: #00a2ff; box-shadow: 0 4px 10px rgba(0, 162, 255, 0.1); }
-        .btn-download { background: #a200ff; box-shadow: 0 4px 10px rgba(162, 0, 255, 0.1); }
+        .btn-tutorial { background: #00a2ff; }
+        .btn-download { background: #a200ff; }
         .btn-action i { margin-right: 5px; }
-        
         .back-home-container { display: flex; justify-content: center; margin: 20px 0; width: 100%; }
         .btn-back-home { 
             display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; background: rgba(0, 0, 0, 0.8); 
             color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 2px solid #ff0000; 
             border-radius: 30px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transition: all 0.3s ease; font-size: 0.85rem;
         }
-        .btn-back-home:hover { background: #ff0000; box-shadow: 0 0 25px #ff0000; transform: scale(1.05); }
-        
         #notification-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast-notification { background: rgba(0, 0, 0, 0.8); border: 2px solid #ff0000; border-radius: 12px; padding: 14px 24px; color: #ffffff; font-weight: bold; font-size: 0.9rem; box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); display: flex; align-items: center; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         .toast-notification.show { opacity: 1; transform: translateY(0); }
@@ -127,156 +65,62 @@
         <a href="pc.html" class="nav-link">Windows & Office</a>
     </div>
     <div id="notification-container"></div>
-    
     <div class="search-container">
         <input type="text" class="search-input" id="buscador-campo" oninput="ejecutarBusqueda()" placeholder="🔍 Buscar aplicación...">
     </div>
-    
-    <div class="carousel-wrapper" id="carousel">
-        <div class="grid-container" id="grid">
-            <!-- 1. CapCut -->
-            <div class="card" data-color="#00334e">
-                <div>
-                    <div class="card-title">CapCut Pro</div>
-                    <div class="card-subtitle">(Premium Mod)</div>
+    <div class="main-content">
+        <div class="carousel-wrapper" id="carousel">
+            <div class="grid-container" id="grid">
+                <div class="card">
+                    <div><div class="card-title">CapCut Pro</div><div class="card-subtitle">(Premium Mod)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://sftcdn.net" alt="CapCut"></div>
+                    <div class="btn-group">
+                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                        <a href="#" class="btn-action btn-download btn-notify" data-name="CapCut Pro"><i class="fas fa-download"></i> Descargar</a>
+                    </div>
                 </div>
-                <div class="img-container">
-                    <img class="card-img" src="https://sftcdn.net" alt="CapCut">
+                <div class="card">
+                    <div><div class="card-title">TikTok Plus</div><div class="card-subtitle">(No Watermark)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://flaticon.com" alt="TikTok"></div>
+                    <div class="btn-group">
+                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                        <a href="#" class="btn-action btn-download btn-notify" data-name="TikTok Plus"><i class="fas fa-download"></i> Descargar</a>
+                    </div>
                 </div>
-                <div class="btn-group">
-                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
-                    <a href="#" class="btn-action btn-download btn-notify" data-name="CapCut Pro"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card">
+                    <div><div class="card-title">Loquendo Voice</div><div class="card-subtitle">(PC)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://postimg.cc" alt="Loquendo"></div>
+                    <div class="btn-group">
+                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                        <a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="Loquendo Voice"><i class="fas fa-download"></i> Descargar</a>
+                    </div>
                 </div>
-            </div>
-            <!-- 2. TikTok -->
-            <div class="card" data-color="#250036">
-                <div>
-                    <div class="card-title">TikTok Plus</div>
-                    <div class="card-subtitle">(No Watermark)</div>
-                </div>
-                <div class="img-container">
-                    <img class="card-img" src="https://flaticon.com" alt="TikTok">
-                </div>
-                <div class="btn-group">
-                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
-                    <a href="#" class="btn-action btn-download btn-notify" data-name="TikTok Plus"><i class="fas fa-download"></i> Descargar</a>
-                </div>
-            </div>
-            <!-- 3. Loquendo -->
-            <div class="card" data-color="#3a1a00">
-                <div>
-                    <div class="card-title">Loquendo Voice</div>
-                    <div class="card-subtitle">(PC)</div>
-                </div>
-                <div class="img-container">
-                    <img class="card-img" src="https://postimg.cc" alt="Loquendo">
-                </div>
-                <div class="btn-group">
-                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
-                    <a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="Loquendo Voice"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card">
+                    <div><div class="card-title">Spotify Plus</div><div class="card-subtitle">(PC)</div></div>
+                    <div class="img-container"><img class="card-img" src="https://flaticon.com" alt="Spotify"></div>
+                    <div class="btn-group">
+                        <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
+                        <a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a>
+                    </div>
                 </div>
             </div>
-            <!-- 4. Spotify Plus -->
-            <div class="card" data-color="#003300">
-                <div>
-                    <div class="card-title">Spotify Plus</div>
-                    <div class="card-subtitle">(PC)</div>
-                </div>
-                <div class="img-container">
-                    <img class="card-img" src="https://flaticon.com" alt="Spotify">
-                </div>
-                <div class="btn-group">
-                    <a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a>
-                    <a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a>
-                </div>
         </div>
     </div>
-
-    <!-- Botón inferior para regresar al Inicio -->
-    <div class="back-home-container">
-        <a href="index.html" class="btn-back-home"><i class="fas fa-home"></i> Volver al Inicio</a>
-    </div>
-
+    <div class="back-home-container"><a href="index.html" class="btn-back-home"><i class="fas fa-home"></i> Volver al Inicio</a></div>
     <script>
-        // 1. LÓGICA DEL BUSCADOR
-        function ejecutarBusqueda() {
-            let input = document.getElementById('buscador-campo').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            
-            for (let i = 0; i < cards.length; i++) {
-                let titleElement = cards[i].querySelector('.card-title');
-                if (titleElement) {
-                    let title = titleElement.textContent.toLowerCase();
-                    if (title.includes(input)) {
-                        cards[i].style.display = "flex";
-                    } else {
-                        cards[i].style.display = "none";
-                    }
-                }
+        const carousel = document.getElementById('carousel'); const cards = document.querySelectorAll('.card');
+        function updateCarouselFocus() {
+            const screenCenter = window.innerWidth / 2; let closestCard = null; let minDistance = Infinity;
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect(); const cardCenter = cardRect.left + cardRect.width / 2; const distance = Math.abs(screenCenter - cardCenter);
+                card.classList.remove('active-card'); card.style.transform = 'scale(0.85) rotateX(0deg) rotateY(0deg) translateZ(0)';
+                if (distance < minDistance) { minDistance = distance; closestCard = card; }
+            });
+            if (closestCard) {
+                closestCard.classList.add('active-card'); closestCard.style.transform = 'scale(1.12) rotateX(0deg) rotateY(0deg) translateZ(20px)';
             }
         }
-
-        // 2. EFECTO DINÁMICO INTERACTIVO 3D (TILT EFFECT)
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const cardRect = card.getBoundingClientRect();
-                const cardWidth = cardRect.width;
-                const cardHeight = cardRect.height;
-                
-                const centerX = cardRect.left + cardWidth / 2;
-                const centerY = cardRect.top + cardHeight / 2;
-                const mouseX = e.clientX - centerX;
-                const mouseY = e.clientY - centerY;
-                
-                const rotateX = (-mouseY / (cardHeight / 2)) * 15;
-                const rotateY = (mouseX / (cardWidth / 2)) * 15;
-                
-                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                card.style.boxShadow = `${-rotateY * 2}px ${rotateX * 2}px 30px rgba(255, 0, 0, 0.6)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-                card.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.4)';
-            });
-        });
-        };
-
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                const titleElement = card.querySelector('.card-title');
-                if (titleElement) {
-                    const titulo = titleElement.textContent.toLowerCase().trim();
-                    // Si el título coincide con nuestra lista, cambiamos el fondo con una transición suave
-                    if (coloresApps[titulo]) {
-                        document.body.style.transition = "background 0.5s ease";
-                        document.body.style.background = coloresApps[titulo];
-                    }
-                }
-            });
-
-        // 3. LÓGICA DE NOTIFICACIONES TOAST
-        document.querySelectorAll('.btn-notify').forEach(button => {
-            button.addEventListener('click', function(e) {
-                let appName = this.getAttribute('data-name');
-                let container = document.getElementById('notification-container');
-                
-                let toast = document.createElement('div');
-                toast.className = 'toast-notification';
-                toast.innerHTML = `⏳ Preparando descarga de ${appName}...`;
-                
-                container.appendChild(toast);
-                setTimeout(() => toast.classList.add('show'), 50);
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 300);
-                }, 3000);
-            });
-        });
-    </script>
-</body>
-</html>
-
-                
+        carousel.addEventListener('scroll', updateCarouselFocus); window.addEventListener('resize', updateCarouselFocus); setTimeout(updateCarouselFocus, 100);
+        let isDown = false; let startX; let scrollLeft;
+        carousel.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft; });
+        carousel.addEventListener('mouseleave', () => isDown = false); carousel.addEventListener('mouseup', () => isDown = false);
