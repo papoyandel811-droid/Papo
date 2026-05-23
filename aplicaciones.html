@@ -89,7 +89,7 @@
                         <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="https://cuty.io" class="btn-action btn-download btn-notify" data-name="Loquendo Voice"><i class="fas fa-download"></i> Descargar</a></div>
                     </div>
                     <!-- Tarjeta 4 (Corregida y cerrada) -->
-                                                   <div class="card">
+                              <div class="card">
                     <div><div class="card-title">Spotify Plus</div><div class="card-subtitle">(PC)</div></div>
                     <div class="img-container"><img class="card-img" src="https://flaticon.com" alt="Spotify"></div>
                     <div class="btn-group"><a href="#" class="btn-action btn-tutorial"><i class="fas fa-play-circle"></i> Ver Tutorial</a><a href="#" class="btn-action btn-download btn-notify" data-name="Spotify Plus"><i class="fas fa-download"></i> Descargar</a></div>
@@ -127,7 +127,7 @@
         carousel.addEventListener('mouseup', () => isDown = false);
         carousel.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - carousel.offsetLeft; const walk = (x - startX) * 1.5; carousel.scrollLeft = scrollLeft - walk; updateCarouselFocus(); });
         
-        // NUEVO: Lógica de clic sobre las tarjetas laterales para desplazarse
+        // Lógica de clic sobre las tarjetas laterales para desplazarse
         cards.forEach(card => {
             card.addEventListener('click', (e) => {
                 // Si el usuario hace clic en los botones de "Descargar" o "Tutorial", no movemos el carrusel
