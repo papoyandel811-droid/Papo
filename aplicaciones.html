@@ -7,47 +7,23 @@
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         * { box-sizing: border-box; margin:0; padding:0; }
-        body { 
-            background: radial-gradient(circle, #2a0000 0%, #050000 100%) !important; color: #ffffff; 
-            font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; perspective: 1000px;
-            display: flex; flex-direction: column;
-        }
-        .navbar { 
-            position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); 
-            border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 15px; padding: 15px; z-index: 1000; 
-        }
+        body { background: radial-gradient(circle, #2a0000 0%, #050000 100%) !important; color: #ffffff; font-family: 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; perspective: 1000px; display: flex; flex-direction: column; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 0, 0, 0.95); border-bottom: 2px solid rgba(255, 0, 0, 0.3); display: flex; justify-content: center; gap: 15px; padding: 15px; z-index: 1000; }
         .nav-link { color: #b3b3b3; text-decoration: none; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; }
         .nav-link.active { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
         
-        /* BUSCADOR: Efecto Cristal Premium */
+        /* BUSCADOR: Efecto Cristal Translúcido */
         .search-container { max-width: 500px; margin: 100px auto 10px auto; display: flex; justify-content: center; width: 100%; padding: 0 20px; }
-        .search-input { 
-            width: 100%; padding: 12px 20px; 
-            background: rgba(15, 2, 2, 0.75) !important; 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; 
-            font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); 
-            transition: all 0.3s ease; text-align: center; 
-        }
-        .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(25, 4, 4, 0.85) !important; }
+        .search-input { width: 100%; padding: 12px 20px; background: rgba(15, 2, 2, 0.7) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid #ff0000; border-radius: 30px; color: #ffffff; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); transition: all 0.3s ease; text-align: center; }
+        .search-input:focus { box-shadow: 0 0 25px #ff0000; background: rgba(25, 4, 4, 0.8) !important; }
         
         .main-content { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
         .carousel-wrapper { width: 100%; overflow-x: auto; scroll-behavior: smooth; display: flex; align-items: center; padding: 60px 0; cursor: grab; scrollbar-width: none; }
         .carousel-wrapper::-webkit-scrollbar { display: none; }
         .grid-container { display: flex; gap: 40px; padding: 0 calc(50vw - 140px); }
         
-        /* TARJETAS: Efecto Cristal Cyberpunk */
-        .card { 
-            background: linear-gradient(135deg, rgba(25, 5, 5, 0.82) 0%, rgba(10, 2, 2, 0.93) 100%) !important; 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 0, 0, 0.15); border-radius: 20px; 
-            padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; 
-            height: 400px; width: 280px; min-width: 280px; justify-content: space-between; 
-            transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease; 
-            transform-style: preserve-3d; opacity: 0.35; transform: scale(0.85);
-        }
+        /* TARJETAS: Efecto Cristal Esmerilado Cyberpunk */
+        .card { background: linear-gradient(135deg, rgba(25, 5, 5, 0.78) 0%, rgba(10, 2, 2, 0.9) 100%) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 2px solid rgba(255, 0, 0, 0.15); border-radius: 20px; padding: 22px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; height: 400px; width: 280px; min-width: 280px; justify-content: space-between; transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s ease, border-color 0.25s ease, opacity 0.25s ease; transform-style: preserve-3d; opacity: 0.35; transform: scale(0.85); }
         .card.active-card { opacity: 1; border-color: #ff0000; box-shadow: 0 0 35px rgba(255, 0, 0, 0.6); transform: scale(1.12) translateZ(20px); }
         .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 2px; }
         .card-subtitle { font-size: 0.75rem; color: #ff0000; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; }
@@ -60,16 +36,9 @@
         .btn-download { background: #a200ff; }
         .btn-action i { margin-right: 5px; }
         
-        /* BOTÓN INFERIOR: Cristal Translúcido a juego */
+        /* BOTÓN INFERIOR: Cristal Translúcido */
         .back-home-container { display: flex; justify-content: center; margin: 20px 0; width: 100%; }
-        .btn-back-home { 
-            display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; 
-            background: rgba(15, 2, 2, 0.75) !important; 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 2px solid #ff0000; 
-            border-radius: 30px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transition: all 0.3s ease; font-size: 0.85rem;
-        }
+        .btn-back-home { display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; background: rgba(15, 2, 2, 0.7) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 2px solid #ff0000; border-radius: 30px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transition: all 0.3s ease; font-size: 0.85rem; }
         .btn-back-home:hover { background: #ff0000 !important; box-shadow: 0 0 25px #ff0000; transform: scale(1.05); }
         
         #notification-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
@@ -119,25 +88,13 @@
             });
             if (closestCard) { closestCard.classList.add('active-card'); closestCard.style.transform = 'scale(1.12) rotateX(0deg) rotateY(0deg) translateZ(20px)'; }
         }
-        carousel.addEventListener('scroll', updateCarouselFocus); window.addEventListener('resize', updateCarouselFocus);
-        
-        // CORRECCIÓN CLAVE: Fuerza la actualización al arrastrar con el mouse en computadoras
+        carousel.addEventListener('scroll', updateCarouselFocus); window.addEventListener('resize', updateCarouselFocus); setTimeout(updateCarouselFocus, 100);
         let isDown = false; let startX; let scrollLeft;
         carousel.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft; });
         carousel.addEventListener('mouseleave', () => isDown = false); carousel.addEventListener('mouseup', () => isDown = false);
-        carousel.addEventListener('mousemove', (e) => { 
-            if(!isDown) return; e.preventDefault(); 
-            const x = e.pageX - carousel.offsetLeft; 
-            carousel.scrollLeft = scrollLeft - (x - startX) * 1.5;
-            updateCarouselFocus(); // Llama al zoom en tiempo real mientras arrastras
-        });
+        carousel.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - carousel.offsetLeft; const walk = (x - startX) * 1.5; carousel.scrollLeft = scrollLeft - walk; updateCarouselFocus(); });
         
-        // Ejecuciones iniciales instantáneas forzadas
-        updateCarouselFocus();
-        window.onload = updateCarouselFocus;
-        setTimeout(updateCarouselFocus, 300);
-
-                cards.forEach(card => {
+        cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 if (!card.classList.contains('active-card')) return;
                 const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left - (rect.width / 2); const y = e.clientY - rect.top - (rect.height / 2);
